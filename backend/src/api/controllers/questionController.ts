@@ -20,5 +20,38 @@ export const fetchQuestions = async(req: Request, res: Response)=>{
 }
 
 export const enterQuestions = async (req: Request, res: Response) => {
-    return res.status(200).json({msg: "Sucess"});
+    const userAnswers: Array<{
+        questionId: string;
+        option: number;
+    }> = req.body;
+    
+    if(!userAnswers) return res.status(400).json({
+        msg: "no data received!"
+    });
+
+    try {
+        const questions = await prisma.testQuestions.findMany();
+        const qAns = new Map<string, number>();
+        questions.forEach((item) => qAns.set(item.id, item.answer));
+
+        let score: number = 0;
+        let totScore: number = 0;
+        userAnswers.forEach((item) => {
+            if (qAns.get(item.questionId) === item.option) score++;
+            totScore++;
+        })
+
+        const rounded = (score / totScore)*100;
+
+        return res.status(200).json({
+            marks: score,
+            percentange: rounded.toFixed(2)
+        });
+    }
+    catch(e: any) {
+        return res.status(400).json({
+            msg: "Error! " + e.message
+        })
+    }
+
 }
