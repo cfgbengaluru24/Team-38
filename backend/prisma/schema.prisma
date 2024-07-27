@@ -84,7 +84,6 @@ model FresherModules {
 model Report {
   id         String   @id @default(cuid()) @map("_id")
   customerId String
-  date       DateTime
   profit     Float
   income     Float
 
