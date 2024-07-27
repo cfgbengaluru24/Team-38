@@ -1,7 +1,6 @@
-import {  useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import OAuth from "../components/OAuth";
 import { BACKEND_URL } from "../config";
 
 export default function TrainerSignin() {
@@ -19,7 +18,7 @@ export default function TrainerSignin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${BACKEND_URL}/api/login/a`, {
+      const res = await fetch(`${BACKEND_URL}/api/login?type=a`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,20 +57,10 @@ export default function TrainerSignin() {
           onChange={handleChange}
         />
 
-        <button
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80 font-medium mt-3"
-        >
+        <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80 font-medium mt-3">
           Sign In
         </button>
-        <OAuth />
       </form>
-
-      <div className="flex gap-2 mt-3 justify-center items-center font-medium">
-        <div>Don't have an account?</div>
-        <Link to={"/trainer-signup"}>
-          <span className="text-blue-700 hover:underline">Sign up</span>
-        </Link>
-      </div>
     </div>
   );
 }

@@ -33,7 +33,7 @@ export default function TraineeSignup() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${BACKEND_URL}/api/signup/f`, {
+      const res = await fetch(`${BACKEND_URL}/api/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

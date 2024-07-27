@@ -29,7 +29,7 @@ export default function TraineeSignin() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${BACKEND_URL}/api/login/f`, {
+      const res = await fetch(`${BACKEND_URL}/api/login?type=f`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
