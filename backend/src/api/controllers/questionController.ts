@@ -13,9 +13,11 @@ export const fetchQuestions = async(req: Request, res: Response)=>{
                 optionD:true,
             }
         })
-    }catch(err)
+        return res.status(200).json(response)
+    }catch(e:any)
     {
-        console.log("question fetch catch : ",err)
+        console.log("question fetch catch : ",e.message)
+        return res.status(400).json(e.message)
     }
 }
 
