@@ -7,15 +7,18 @@ import {
 	customersDetails,
 	freshersDetails,
 } from "../controllers/fresherToTrainerController";
+import { writeQuestions } from "../controllers/writeQuestionsController";
 
 // Endpoint here hits the /api/a/ endpoint
 
 export const api = express();
 
+
 api.use(authMiddleware);
 api.post("/signup", signup);
 api.post("/freshers", freshersDetails);
 api.get("/customers", customersDetails);
+
 // api.get("/", getAllTeachers);
 // api.get("/scores", getClassScores);
 // api.get("/:teacherId", getSpecificTeacher);
