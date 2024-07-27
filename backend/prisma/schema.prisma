@@ -53,6 +53,7 @@ model Customer {
   Advanced        Advanced         @relation(fields: [trainerId], references: [id])
   Report          Report[]
   CustomerDetails CustomerDetails?
+  EndLine         EndLine?
 }
 
 model CustomerDetails {
@@ -63,6 +64,7 @@ model CustomerDetails {
   age                         Int
   phNo                        BigInt        @unique
   business                    String
+  maritalStatus               maritalEnum
   religion                    religionEnum
   caste                       casteEnum
   education                   educationEnum
@@ -75,6 +77,12 @@ model CustomerDetails {
   bankAccount                 String?
 
   Customer Customer @relation(fields: [customerId], references: [id])
+}
+
+enum maritalEnum {
+  Single
+  Married
+  Divorced
 }
 
 enum religionEnum {
@@ -141,6 +149,18 @@ model Report {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  Customer Customer @relation(fields: [customerId], references: [id])
+}
+
+model EndLine {
+  id             String    @id @default(cuid()) @map("_id")
+  customerId     String    @unique
+  familyBusiness Boolean
+  business1      String
+  startDate1     DateTime
+  business2      String?
+  startDate2     DateTime?
 
   Customer Customer @relation(fields: [customerId], references: [id])
 }
