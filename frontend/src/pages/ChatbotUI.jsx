@@ -56,35 +56,50 @@ const ChatbotUI = () => {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle>Best Practices Foundation Chatbot</CardTitle>
+    <Card className="w-full max-w-2xl mx-auto shadow-lg">
+      <CardHeader className="bg-gradient-to-r from-green-500 to-green-700 text-white rounded-t-lg">
+        <CardTitle className="text-2xl font-bold">Best Practices Foundation Chatbot</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div ref={chatContainerRef} className="h-96 overflow-y-auto mb-4 p-4 border rounded">
+      <CardContent className="p-6">
+        <div 
+          ref={chatContainerRef} 
+          className="h-[28rem] overflow-y-auto mb-6 p-4 border rounded-lg bg-green-50 shadow-inner"
+        >
           {messages.map((message, index) => (
-            <div key={index} className={`mb-2 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-              <span className={`inline-block p-2 rounded-lg ${message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
+            <div key={index} className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
+              <span 
+                className={`inline-block p-3 rounded-lg ${
+                  message.role === 'user' 
+                    ? 'bg-green-500 text-white' 
+                    : 'bg-white text-gray-800 border border-green-200'
+                } shadow-md`}
+              >
                 {message.content}
               </span>
             </div>
           ))}
           {isLoading && (
             <div className="text-center">
-              <span className="inline-block p-2 rounded-lg bg-gray-100">Thinking...</span>
+              <span className="inline-block p-3 rounded-lg bg-green-200 text-green-600 animate-pulse">
+                Thinking...
+              </span>
             </div>
           )}
         </div>
-        <form onSubmit={handleSendMessage} className="flex gap-2">
+        <form onSubmit={handleSendMessage} className="flex gap-3">
           <Input
             type="text"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             placeholder="Type your message..."
-            className="flex-grow"
+            className="flex-grow text-lg py-2 px-4 rounded-full focus:ring-2 focus:ring-green-500"
           />
-          <Button type="submit" disabled={isLoading}>
-            <Send className="h-4 w-4" />
+          <Button 
+            type="submit" 
+            disabled={isLoading}
+            className="rounded-full bg-green-500 hover:bg-green-600 transition-colors"
+          >
+            <Send className="h-5 w-5" />
           </Button>
         </form>
       </CardContent>
