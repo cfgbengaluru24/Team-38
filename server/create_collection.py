@@ -28,17 +28,13 @@ schema = {
             "model": "text-embedding-3-large",
             "vectorizeClassName": False,
         },
+        "generative-openai": {
+            "model": "gpt-4-1106-preview"
+        }
     },
     "properties": [
         {
-            "name": "title",
-            "dataType": ["text"],
-            "moduleConfig": {
-                "text2vec-openai": {"skip": False, "vectorizePropertyName": False}
-            },
-        },
-        {
-            "name": "content",
+            "name": "section",
             "dataType": ["text"],
             "moduleConfig": {
                 "text2vec-openai": {"skip": False, "vectorizePropertyName": False}
