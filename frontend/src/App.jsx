@@ -7,7 +7,6 @@ import TrainerSignin from "./pages/TrainerSignin";
 import TraineeSignup from "./pages/TraineeSignup";
 import Trainee from "./pages/Trainee";
 import Trainer from "./pages/Trainer";
-import Header from "./components/Header";
 import Test from "./pages/Test";
 import MonitorTrainee from "./pages/MonitorTrainee";
 import TraineeInfo from "./pages/TraineeInfo";
@@ -15,7 +14,6 @@ import TraineeInfo from "./pages/TraineeInfo";
 function App() {
   return (
     <BrowserRouter>
-      <Header />
       <Routes>
         <Route path="/trainee-signin" element={<TraineeSignin />} />
         <Route path="/trainee-signup" element={<TraineeSignup />} />

@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
 import { BACKEND_URL } from "../config";
 
 export default function TraineeSignin() {
@@ -46,7 +50,7 @@ export default function TraineeSignin() {
   return (
     <div className="px-16 max-w-lg mx-auto my-24">
       <h1 className="text-3xl sm:text-4xl text-center font-extrabold my-7">
-      Trainee Sign In
+        Trainee Sign In
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -75,7 +79,7 @@ export default function TraineeSignin() {
 
       <div className="flex gap-2 mt-3 justify-center items-center font-medium">
         <div>Don't have an account?</div>
-        <Link to={"/signup"}>
+        <Link to={"/trainee-signup"}>
           <span className="text-blue-700 hover:underline">Sign up</span>
         </Link>
       </div>

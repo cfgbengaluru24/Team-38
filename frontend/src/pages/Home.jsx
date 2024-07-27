@@ -1,33 +1,28 @@
 import { Link } from "react-router-dom";
-import woman from "../assets/woman1.jpg";
+import hero from "../assets/hero.jpg";
+import logo from "../assets/logo.png";
+
 const Home = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen p-4 bg-gray-50">
-      <div className="box flex flex-col md:flex-row justify-center items-center bg-white p-6 rounded-lg shadow-lg">
-        <div className="right mb-4 md:mb-0 md:mr-4">
-          <img
-            src={woman}
-            alt="Example Image"
-            className="w-32 h-32 md:w-48 md:h-48"
-          />
+    <div className="flex flex-wrap h-screen">
+      <div className="w-full md:w-1/2 bg-[#F9F5E8] flex flex-col items-center justify-center font-semibold">
+        <div className="flex items-center justify-start mb-10">
+          <img src={logo} alt="" className="w-14 bg-transparent block mr-2" />
+          <div className="text-2xl font font-extrabold">Best Practices Foundation</div>
         </div>
-        <div className="left text-center md:text-left">
-          <h2 className="text-xl md:text-2xl font-bold mb-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
-            eum.
-          </h2>
-          <p className="mb-4">Lorem ipsum dolor sit amet.</p>
-          <Link to="/trainee-signin">
-            <button className="bg-green-500 text-white px-4 py-2 rounded mr-2">
-              Trainee
-            </button>
-          </Link>
-          <Link to="/trainer-signin">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded mb-2 md:mb-0 md:mr-2">
-              Trainer
-            </button>
-          </Link>
-        </div>
+        <Link to="/trainee-signin">
+          <button className="bg-[#00715D] text-white py-2 rounded px-44 mb-8 hover:opacity-85">
+            Trainee Log In
+          </button>
+        </Link>
+        <Link to="/trainer-signin">
+          <button className="bg-[#00715D] text-white px-44 py-2 rounded mb-2 hover:opacity-85">
+            Trainer Log In
+          </button>
+        </Link>
+      </div>
+      <div className="hidden md:block w-full md:w-1/2 md:h-screen">
+        <img src={hero} alt="Hero" className="w-full h-full object-cover" />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import woman from "../assets/woman1.jpg";
+import woman from "../assets/hero.jpg";
 import { Link } from "react-router-dom";
 
 const Trainer = () => {
