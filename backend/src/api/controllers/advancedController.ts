@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import prisma from "../../utils/db";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { Fresher } from "@prisma/client";
 
 export const signup = async (req: Request, res: Response) => {
