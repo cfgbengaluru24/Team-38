@@ -11,7 +11,7 @@ const Home = () => {
           <h2 className="text-xl md:text-2xl font-bold mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, eum.</h2>
           <p className="mb-4">Lorem ipsum dolor sit amet.</p>
           <Link to='TrainerSignin'><button className="bg-blue-500 text-white px-4 py-2 rounded mb-2 md:mb-0 md:mr-2">Trainee</button></Link>
-          <Link></Link><button className="bg-green-500 text-white px-4 py-2 rounded">Trainer</button>
+          <Link to='TraineeSignin'><button className="bg-green-500 text-white px-4 py-2 rounded">Trainer</button></Link>
         </div>
       </div>
     </div>
