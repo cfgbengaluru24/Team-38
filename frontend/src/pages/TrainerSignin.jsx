@@ -30,7 +30,7 @@ export default function TrainerSignin() {
       if (data.success === false) {
         return;
       }
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", data.accessToken);
       navigate("/trainer");
     } catch (error) {}
   };
