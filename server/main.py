@@ -45,6 +45,7 @@ def analyze_report():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# TODO: Update to add RAG here with weaviate
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     try:
@@ -92,7 +93,7 @@ def trainee_progress():
             return jsonify({"error": "No trainee ID provided"}), 400
 
         # This is a placeholder for actual database query logic
-        # In a real application, you would fetch this data from your database
+        # Should get from MongoDB
         progress_data = [
             {"date": "2023-01-01", "score": 75},
             {"date": "2023-02-01", "score": 80},
