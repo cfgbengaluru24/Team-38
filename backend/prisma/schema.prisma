@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Fresher {
+  id        String @id @default(cuid()) @map("_id")
+  username  String @unique
+  email     String @unique
+  password  String
+  testScore Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Advanced       Advanced?
+  FresherModules FresherModules[]
+}
+
+model Advanced {
+  id       String @id @default(cuid()) @map("_id")
+  username String @unique
+  email    String @unique
+  password String
+
+  fresherId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Fresher  Fresher    @relation(fields: [fresherId], references: [id])
+  Customer Customer[]
+}
+
+model Customer {
+  id       String  @id @default(cuid()) @map("_id")
+  name     String
+  business String
+  email    String?
+  phNo     BigInt  @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trainerId String
+  Advanced  Advanced @relation(fields: [trainerId], references: [id])
+  Report    Report[]
+}
+
+model Modules {
+  id         String @id @default(cuid()) @map("_id")
+  moduleName String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  FresherModules FresherModules[]
+}
+
+model FresherModules {
+  id        String  @id @default(cuid()) @map("_id")
+  fresherId String
+  moduleId  String
+  completed Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Fresher   Fresher  @relation(fields: [fresherId], references: [id])
+  Modules   Modules  @relation(fields: [moduleId], references: [id])
+
+  @@unique([fresherId, moduleId])
+}
+
+model Report {
+  id         String   @id @default(cuid()) @map("_id")
+  customerId String
+  date       DateTime
+  profit     Float
+  income     Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Customer Customer @relation(fields: [customerId], references: [id])
+}
+
+model TestQuestions {
+  id       String @id @default(cuid()) @map("_id")
+  question String
+  answer   Int
+  optionA  String
+  optionB  String
+  optionC  String
+  optionD  String
+}

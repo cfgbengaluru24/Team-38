@@ -6,10 +6,9 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice";
-import OAuth from "../components/OAuth";
 import { BACKEND_URL } from "../config";
 
-export default function Signup() {
+export default function TraineeSignup() {
   const [formData, setFormData] = useState({});
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
@@ -33,7 +32,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${BACKEND_URL}/api/auth/signup`, {
+      const res = await fetch(`${BACKEND_URL}/api/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +48,7 @@ export default function Signup() {
       dispatch(signInSuccess(data));
       localStorage.setItem("token", data.token);
 
-      navigate("/");
+      navigate("/trainee");
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
@@ -58,7 +57,7 @@ export default function Signup() {
   return (
     <div className="px-16 max-w-lg mx-auto my-24">
       <h1 className="text-3xl sm:text-4xl text-center font-extrabold my-7">
-        Sign Up
+      Trainee Sign Up
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
