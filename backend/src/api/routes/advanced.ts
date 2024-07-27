@@ -12,6 +12,7 @@ import {
 
 export const api = express();
 
+
 api.use(authMiddleware);
 api.post("/signup", signup);							// Tranfer fresher to advanced
 api.post("/freshers", freshersDetails);		// Fetch all fresher details
