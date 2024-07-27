@@ -6,7 +6,7 @@ import { BACKEND_URL } from "../config";
 
 export default function TraineeSignin() {
   const [formData, setFormData] = useState({});
-  const {  loading, error } = useSelector((state) => state.user);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

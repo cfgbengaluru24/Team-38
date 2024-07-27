@@ -1,6 +1,7 @@
 import express from "express";
 import {
   fetchModules,
+  markAsDone,
   signup
 } from "../controllers/fresherController";
 import { authMiddleware } from "../controllers/middleware";
@@ -15,6 +16,7 @@ api.use(authMiddleware);
 api.get("/module", fetchModules);
 api.get("/test", fetchQuestions);
 api.post("/test", enterQuestions);
+api.post("/test/:moduleId", markAsDone);
 // api.get("/", getAllStudents);
 // api.get("/:studentId", getSpecificStudent);
 // api.get("/usn/:usn", getSpecificStudentByUsn);
