@@ -10,7 +10,7 @@ export const signup = async (req: Request, res: Response) => {
 		const hashedPassword = await bcrypt.hash(password, 10);
 		const exists = await prisma.fresher.findFirst({
 			where: {
-				email
+				email,
 			},
 		});
 
@@ -36,13 +36,13 @@ export const signup = async (req: Request, res: Response) => {
 		const modules: Array<Modules> = await prisma.modules.findMany();
 
 		let toResolve: Array<Promise<FresherModules>> = [];
-		for(let i = 0; i < modules.length; i++) {
+		for (let i = 0; i < modules.length; i++) {
 			const temp = prisma.fresherModules.create({
 				data: {
 					fresherId: result.id,
-					moduleId: modules[i].id
-				}
-			})
+					moduleId: modules[i].id,
+				},
+			});
 
 			toResolve.push(temp);
 		}
@@ -50,7 +50,6 @@ export const signup = async (req: Request, res: Response) => {
 		Promise.all([...toResolve]);
 
 		console.log("DONE");
-		
 
 		return res.status(200).json({ msg: "Success!" });
 	} catch (err: any) {
@@ -63,29 +62,28 @@ export const signup = async (req: Request, res: Response) => {
 export const fetchModules = async (req: Request, res: Response) => {
 	const { id } = req.query;
 
-	if(!id) return res.status(400).json({msg: "no id found!"});
+	if (!id) return res.status(400).json({ msg: "no id found!" });
 
 	try {
 		const result = await prisma.fresherModules.findMany({
 			where: {
-				fresherId: id as string
+				fresherId: id as string,
 			},
 			include: {
-				Modules: true
-			}
+				Modules: true,
+			},
 		});
 		const response = result.map((item) => ({
 			moduleId: item.moduleId,
 			moduleName: item.Modules.moduleName,
-			completed: item.completed
+			completed: item.completed,
 		}));
 
 		return res.status(200).json(response);
+	} catch (e: any) {
+		res.status(400).json({ msg: "Error in fetching data!" });
 	}
-	catch(e: any) {
-		res.status(400).json({msg: "Error in fetching data!"});
-	}
-}
+};
 
 // export const getAllStudents = async (req: Request, res: Response) => {
 // 	const { userRole } = req;
