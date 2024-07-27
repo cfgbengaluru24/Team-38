@@ -9,4 +9,4 @@ export const apis = express();
 
 apis.use("/f", fresherApi);
 apis.use("/a", advancedApi);
-apis.use("/signin", loginApi)
+apis.use("/signin", loginApi);

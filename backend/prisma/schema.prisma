@@ -28,11 +28,10 @@ model Fresher {
 }
 
 model Advanced {
-  id       String @id @default(cuid()) @map("_id")
-  username String @unique
-  email    String @unique
-  password String
-
+  id        String @id @default(cuid()) @map("_id")
+  username  String @unique
+  email     String @unique
+  password  String
   fresherId String @unique
 
   createdAt DateTime @default(now())
@@ -43,18 +42,79 @@ model Advanced {
 }
 
 model Customer {
-  id       String  @id @default(cuid()) @map("_id")
-  name     String
-  business String
-  email    String?
-  phNo     BigInt  @unique
+  id        String  @id @default(cuid()) @map("_id")
+  name      String
+  email     String?
+  trainerId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  trainerId String
-  Advanced  Advanced @relation(fields: [trainerId], references: [id])
-  Report    Report[]
+  Advanced        Advanced         @relation(fields: [trainerId], references: [id])
+  Report          Report[]
+  CustomerDetails CustomerDetails?
+  EndLine         EndLine?
+}
+
+model CustomerDetails {
+  id                          String        @id @default(cuid()) @map("_id")
+  customerId                  String        @unique
+  village                     String
+  district                    String
+  age                         Int
+  phNo                        BigInt        @unique
+  business                    String
+  maritalStatus               maritalEnum
+  religion                    religionEnum
+  caste                       casteEnum
+  education                   educationEnum
+  areThereSupportingPeople    Boolean
+  numberOfWorkingDaysPerMonth Int
+  dailyEarning                Int
+  aadharCard                  String?
+  PANCard                     String?
+  rationCard                  String?
+  bankAccount                 String?
+
+  Customer Customer @relation(fields: [customerId], references: [id])
+}
+
+enum maritalEnum {
+  Single
+  Married
+  Divorced
+}
+
+enum religionEnum {
+  Hindu
+  Muslim
+  Christian
+  Sikh
+  Jain
+  Buddhist
+  Atheist
+  Others
+}
+
+enum casteEnum {
+  SC
+  ST
+  OBC
+  Others
+}
+
+enum educationEnum {
+  Illiterate
+  Standard_1_5
+  Standard_6_10
+  Standard_10
+  Standard_11_12
+  Standard_12
+  Undergraduate_not_passed
+  Undergraduate
+  Graduate_not_passed
+  Graduate
+  Others
 }
 
 model Modules {
@@ -82,14 +142,26 @@ model FresherModules {
 }
 
 model Report {
-  id         String   @id @default(cuid()) @map("_id")
-  customerId String
-  date       DateTime
-  profit     Float
-  income     Float
+  id           String @id @default(cuid()) @map("_id")
+  customerId   String
+  profit       Float
+  income       Float
+  jsonInsights Json?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  Customer Customer @relation(fields: [customerId], references: [id])
+}
+
+model EndLine {
+  id             String    @id @default(cuid()) @map("_id")
+  customerId     String    @unique
+  familyBusiness Boolean
+  business1      String
+  startDate1     DateTime
+  business2      String?
+  startDate2     DateTime?
 
   Customer Customer @relation(fields: [customerId], references: [id])
 }

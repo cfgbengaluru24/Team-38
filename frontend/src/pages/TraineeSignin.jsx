@@ -6,16 +6,10 @@ import { BACKEND_URL } from "../config";
 
 export default function TraineeSignin() {
   const [formData, setFormData] = useState({});
-  const { currentUser, loading, error } = useSelector((state) => state.user);
+  const {  loading, error } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (currentUser) {
-      navigate("/trainee");
-    }
-  }, [currentUser, navigate]);
 
   const handleChange = (e) => {
     setFormData({
@@ -28,7 +22,7 @@ export default function TraineeSignin() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${BACKEND_URL}/api/login?type=f`, {
+      const res = await fetch(`${BACKEND_URL}/api/signin?type=f`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +35,7 @@ export default function TraineeSignin() {
         dispatch(signInFailure(data.message));
         return;
       }
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", data.accessToken);
       dispatch(signInSuccess(data));
       navigate("/trainee");
     } catch (error) {
@@ -77,7 +71,6 @@ export default function TraineeSignin() {
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
-        <OAuth />
       </form>
 
       <div className="flex gap-2 mt-3 justify-center items-center font-medium">

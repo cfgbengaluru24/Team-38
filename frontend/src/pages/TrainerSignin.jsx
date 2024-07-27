@@ -18,7 +18,7 @@ export default function TrainerSignin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${BACKEND_URL}/api/login?type=a`, {
+      const res = await fetch(`${BACKEND_URL}/api/signin?type=a`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

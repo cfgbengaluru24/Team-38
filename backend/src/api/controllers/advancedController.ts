@@ -7,17 +7,23 @@ export const signup = async (req: Request, res: Response) => {
 
 	let existingUser: Fresher | null = null;
 	try {
-		existingUser = await prisma.fresher.findUnique({ where: { id: fresherId } });
-		if(!existingUser) return res.status(400).json({ msg: "fresher doesn't exist!" });
-	}
-	catch (e: any) {
+		existingUser = await prisma.fresher.findUnique({
+			where: { id: fresherId },
+		});
+		if (!existingUser)
+			return res.status(400).json({ msg: "fresher doesn't exist!" });
+		if (!existingUser.testScore)
+			return res
+				.status(400)
+				.json({ msg: "please pass the test first, you noob!" });
+	} catch (e: any) {
 		res.status(500).json({ message: e.message });
 	}
 
 	try {
 		const exists = await prisma.advanced.findFirst({
 			where: {
-				id: existingUser?.id
+				id: existingUser?.id,
 			},
 		});
 
@@ -28,7 +34,7 @@ export const signup = async (req: Request, res: Response) => {
 				username: existingUser?.username as string,
 				email: existingUser?.email as string,
 				password: existingUser?.password as string,
-				fresherId: existingUser?.id as string
+				fresherId: existingUser?.id as string,
 			},
 		});
 
@@ -44,357 +50,16 @@ export const signup = async (req: Request, res: Response) => {
 	}
 };
 
-// export const getAllTeachers = async (req: Request, res: Response) => {
-// 	const { userRole } = req;
-// 	if (!userRole || userRole !== "admin")
-// 		return res.status(400).json({
-// 			err: "only admin access!",
-// 		});
+export const getChartData = async (req: Request, res: Response) => {
+	const { userRole } = req;
+	if (userRole !== "advanced")
+		return res.status(403).json({ msg: "you are not trainer" });
 
-// 	try {
-// 		const result: Array<object> = await prisma.teacher.findMany({
-// 			include: {
-// 				teacherDetails: true,
-// 			},
-// 		});
+	const { id } = req.query;
+	if (!id)
+		return res
+			.status(400)
+			.json({ msg: "no id found, please send that also noob" });
 
-// 		console.log(result);
-
-// 		if (!result.length)
-// 			return res.status(404).json({
-// 				err: "No users found!",
-// 			});
-
-// 		res.status(200).json(result);
-// 	} catch (e: any) {
-// 		return res.status(400).json({
-// 			err: "Error: " + e.message,
-// 		});
-// 	}
-// };
-
-// export const getSpecificTeacher = async (req: Request, res: Response) => {
-// 	const { userRole } = req;
-// 	const { teacherId } = req.params;
-
-//   console.log(userRole, teacherId, req.userId, userRole);
-  
-// 	if (userRole !== "admin" && (teacherId != req.userId))
-// 		return res.status(403).json({
-// 			err: "neither are you admin LMAO, nor requesting for your own info",
-// 		});
-
-// 	try {
-// 		const result: Array<object> = await prisma.teacher.findMany({
-// 			include: {
-// 				teacherDetails: true,
-// 			},
-// 		});
-
-// 		if (!result.length)
-// 			return res.status(404).json({
-// 				err: "No user found!",
-// 			});
-
-// 		return res.status(200).json(result[0]);
-// 	} catch (e: any) {
-// 		res.status(400).json({
-// 			err: "Error: " + e.message,
-// 		});
-// 	}
-// };
-
-// export const updateTeacherDetails = async (req: Request, res: Response) => {
-// 	const { teacherId } = req.params;
-// 	const { password, dateOfBirth, gender, address, joiningDate, phNo } =
-// 		req.body;
-
-// 	const { userRole } = req;
-// 	if (userRole !== "admin" && teacherId !== req.userId)
-// 		return res.status(403).json({
-// 			err: "neither are you the admin, nor are you requesting for your own information!",
-// 		});
-
-// 	if (password) {
-// 		try {
-// 			const hashedPassword = await bcrypt.hash(password, 10);
-// 			await prisma.teacher.update({
-// 				data: {
-// 					password: hashedPassword,
-// 				},
-// 				where: { teacherId },
-// 			});
-// 		} catch (e: any) {
-// 			console.log("error updatinng password!");
-// 		}
-
-// 		try {
-// 			const l = dateOfBirth.split("-");
-// 			const m = joiningDate.split("-");
-// 			let dob: Date | undefined;
-// 			let yoj: Date | undefined;
-// 			if (l.length === 3) {
-// 				const year = parseInt(l[2], 10);
-// 				const month = parseInt(l[1], 10) - 1;
-// 				const date = parseInt(l[0], 10) + 1;
-
-// 				dob = new Date(year, month, date);
-// 			} else dob = undefined;
-
-// 			if (m.length === 3) {
-// 				const year = parseInt(l[2], 10);
-// 				const month = parseInt(l[1], 10) - 1;
-// 				const date = parseInt(l[0], 10) + 1;
-
-// 				yoj = new Date(year, month, date);
-// 			} else yoj = undefined;
-
-// 			await prisma.teacherDetails.update({
-// 				data: {
-// 					gender,
-// 					address,
-// 					phNo,
-// 					dateOfBirth: dob,
-// 					joiningDate: yoj,
-// 				},
-// 				where: { teacherId },
-// 			});
-// 		} catch (e: any) {
-// 			return res.status(400).json({
-// 				err: "error updating profile!",
-// 			});
-// 		}
-// 	}
-// };
-
-// export const makeClassTeacher = async (req: Request, res: Response) => {
-// 	const { userRole } = req;
-// 	if (userRole !== "admin")
-// 		return res.status(403).json({
-// 			err: "not authorized for this action!",
-// 		});
-
-// 	const { classId } = req.body;
-// 	const { teacherId } = req.params;
-
-// 	try {
-// 		await prisma.classTeacher.create({
-// 			data: {
-// 				teacherId,
-// 				classId,
-// 			},
-// 		});
-
-// 		return res.status(200).json({
-// 			msg: "success!",
-// 		});
-// 	} catch (e: any) {
-// 		return res.status(500).json({
-// 			err: "error: " + e.message,
-// 		});
-// 	}
-// };
-
-// export const uploadMarks = async (req: Request, res: Response) => {
- 
-// 	interface marksInput {
-// 		usn: string;
-// 		courseCode: string;
-// 		cie1: number;
-// 		cie2: number;
-// 		cie3: number;
-// 		quiz1?: number;
-// 		quiz2?: number;
-// 		aat?: number;
-// 		lab?: number;
-// 		total: number;
-//     semester: semesterenum;
-// 	}
-
-// 	const directoryPath = path.join(__dirname, "../../../uploadMarks");
-// 	const files = fs.readdirSync(directoryPath);
-// 	const excelfile = files[0];
-// 	const excelFilePath = path.join(directoryPath, excelfile);
-// 	const workbook = xlsx.readFile(excelFilePath);
-// 	const worksheet = xlsx.utils.sheet_to_json(
-// 		workbook.Sheets[workbook.SheetNames[0]]
-// 	) as marksInput[];
-
-// 	try {
-// 		for (let row of worksheet) {
-// 			const response = await prisma.student.findFirst({
-// 				where: { usn: row.usn },
-// 			});
-// 			if (!response) {
-// 				return res.json({
-// 					err: "no such student exists",
-// 				});
-// 			}
-// 			const teacherId = req.userId;
-// 			const studentId = response.studentId;
-// 			console.log(teacherId);
-// 			console.log(row.courseCode);
-// 			const temp = await prisma.courseUndertaken.findFirst({
-// 				where:{
-// 					courseCode:row.courseCode,
-// 					teacherId
-// 				}
-// 			});
-
-// 			console.log(temp);
-
-// 			const scoreDetails = await prisma.score.findFirst({
-// 				where:{
-// 					studentId,
-// 					courseObjId:temp?.courseObjId
-// 				}
-// 			});
-
-
-// 			if(scoreDetails?.scoreId){
-// 				const resp = await prisma.score.update({
-// 					data:{
-// 						cie_1: row.cie1?row.cie1:0,
-// 						cie_2: row.cie2?row.cie2:0,
-// 						cie_3: row.cie3?row.cie3:0,
-// 						aat: row.aat ? row.aat : 0,
-// 						quiz_1: row.quiz1 ? row.quiz1 : 0,
-// 						quiz_2: row.quiz2 ? row.quiz2 : 0,
-// 						lab: row.lab ? row.lab : 0,
-// 						total: row.total ? row.total : 0,
-// 						semester: row.semester
-// 					},
-// 					where:{
-// 						scoreId:scoreDetails?.scoreId
-// 					}
-// 				})
-// 			}else{
-// 				const courseObjId = temp?.courseObjId as string;
-// 				const resp = await prisma.score.create({
-// 					data:{
-// 						studentId,
-// 						courseObjId,
-// 						cie_1: row.cie1?row.cie1:0,
-// 						cie_2: row.cie2?row.cie2:0,
-// 						cie_3: row.cie3?row.cie3:0,
-// 						aat: row.aat ? row.aat : 0,
-// 						quiz_1: row.quiz1 ? row.quiz1 : 0,
-// 						quiz_2: row.quiz2 ? row.quiz2 : 0,
-// 						lab: row.lab ? row.lab : 0,
-// 						total: row.total ? row.total : 0,
-// 						semester: row.semester
-// 					}
-// 				})
-// 			}
-
-// 			console.log(row.semester);
-
-// 			// const newResponse = await prisma.score.upsert({
-// 			// 	where: {
-// 			// 		scoreId : scoreDetails?.
-// 			// 	},
-// 			// 	update: {
-// 			// 		cie_1: row.cie1?row.cie1:0,
-// 			// 		cie_2: row.cie2?row.cie2:0,
-// 			// 		cie_3: row.cie3?row.cie3:0,
-// 			// 		aat: row.aat ? row.aat : 0,
-// 			// 		quiz_1: row.quiz1 ? row.quiz1 : 0,
-// 			// 		quiz_2: row.quiz2 ? row.quiz2 : 0,
-// 			// 		lab: row.lab ? row.lab : 0,
-// 			// 		total: row.total ? row.total : 0,
-//           	// 		semester: row.semester
-// 			// 	},
-// 			// 	create: {
-// 			// 		studentId,
-// 			// 		courseObjId: row.courseCode,
-// 			// 		cie_1: row.cie1,
-// 			// 		cie_2: row.cie2,
-// 			// 		cie_3: row.cie3,
-// 			// 		aat: row.aat ? row.aat : 0,
-// 			// 		quiz_1: row.quiz1 ? row.quiz1 : 0,
-// 			// 		quiz_2: row.quiz2 ? row.quiz2 : 0,
-// 			// 		lab: row.lab ? row.lab : 0,
-// 			// 		total: row.total ? row.total : 0,
-//           	// 		semester: row.semester
-// 			// 	},
-// 			// });
-// 		}
-// 		for (const file of files) {
-// 			fs.unlink(path.join(directoryPath, file), (err) => {
-// 				if (err) {
-// 					console.log("error while deleting");
-// 				} else {
-// 					console.log("deleted succesfully");
-// 				}
-// 			});
-// 		}
-
-// 		return res.json({
-// 			response: "updated marks succesfully",
-// 		});
-// 	} catch (err: any) {
-// 		return res.json({ err: err.message });
-// 	}
-// };
-
-
-// export const getClassScores = async (req: Request, res: Response) => {
-// 	console.log("HERE");
 	
-// 	const { userRole, userId } = req;
-// 	const courseCode: string = req.query.courseCode as string;
-// 	const classId: string = req.query.classId as string;
-
-// 	let courseObj: string;
-// 	try {
-// 		const result = await prisma.courseUndertaken.findFirst({
-// 			where: {
-// 				AND: {
-// 					courseCode,
-// 					classId
-// 				}
-// 			},
-// 			select: {
-// 				teacherId: true,
-// 				courseObjId: true
-// 			}
-// 		});
-
-// 		console.log("RESULT: ", result);
-		
-		
-// 		if(!result) throw new Error("you are not allowed to access this class");
-
-// 		if((userRole !== "admin") && (result.teacherId !== userId)) throw new Error("unauthorized access!");
-
-// 		courseObj = result.courseObjId;
-// 	}
-// 	catch (e: any) {
-// 		return res.status(403).json({
-// 			err: "Error: " + e.message
-// 		})
-// 	}
-
-// 	try {
-// 		const response = await prisma.score.findMany({
-// 			where: {
-// 				courseObjId: courseObj
-// 			},
-// 			include: {
-// 				Student: true,
-// 				CourseObj: {
-// 					include: {
-// 						course: true
-// 					}
-// 				}
-// 			}
-// 		});
-
-// 		return res.status(200).json(response);
-// 	}
-// 	catch (e: any) {
-// 		return res.status(400).json({
-// 			err: "Error: " + e.message
-// 		})
-// 	}
-// }
+};
