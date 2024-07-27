@@ -10,7 +10,7 @@ const MonitorCustomer = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       const res = await fetch(
-        `${BACKEND_URL}/api/t/customers`,
+        `${BACKEND_URL}/api/a/customers`,
         {
           method: "GET",
           headers: {
