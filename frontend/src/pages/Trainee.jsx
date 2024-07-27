@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BACKEND_URL } from "../config";
-import 'tailwindcss/tailwind.css';
 
 const Trainee = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -9,6 +8,7 @@ const Trainee = () => {
 
   useEffect(() => {
     const fetchModules = async () => {
+      console.log(currentUser)
       const res = await fetch(
         `${BACKEND_URL}/api/f/module?id=${currentUser.id}`,
         {
@@ -34,7 +34,11 @@ const Trainee = () => {
           className="m-4 p-4 border rounded-lg shadow-lg w-64 bg-white"
         >
           <h2 className="text-xl font-bold mb-2">{moduleName}</h2>
-          <p className={`text-lg ${completed ? "text-green-500" : "text-red-500"}`}>
+          <p
+            className={`text-lg ${
+              completed ? "text-green-500" : "text-red-500"
+            }`}
+          >
             {completed ? "Completed" : "Not Completed"}
           </p>
         </div>

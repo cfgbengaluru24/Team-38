@@ -17,15 +17,20 @@ export const freshersDetails = async (req: Request, res: Response) => {
 };
 
 export const customersDetails = async (req: Request, res: Response) => {
-	const { userRole, id } = req as any;
+	const { userRole } = req;
+	const { id } = req.query;
 
 	if (userRole !== "advanced") {
 		return res.status(403).json({ msg: "you are not authorized!" });
 	}
+
+	if (!id)
+		return res.status(400).json({ msg: "id not found! enter id please!" });
+
 	try {
 		const data = await prisma.advanced.findFirst({
 			where: {
-				id: id,
+				id: id as string,
 			},
 			include: {
 				Customer: true,
