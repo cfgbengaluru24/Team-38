@@ -17,6 +17,7 @@ export const api = express();
 api.post("/signup", signup);
 api.use(authMiddleware);
 api.get("/module", fetchModules);
+
 // api.get("/", getAllStudents);
 // api.get("/:studentId", getSpecificStudent);
 // api.get("/usn/:usn", getSpecificStudentByUsn);
