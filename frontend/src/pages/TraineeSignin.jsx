@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
-import OAuth from "../components/OAuth";
 import { BACKEND_URL } from "../config";
 
-export default function Signin() {
+export default function TraineeSignin() {
   const [formData, setFormData] = useState({});
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
@@ -14,7 +13,7 @@ export default function Signin() {
 
   useEffect(() => {
     if (currentUser) {
-      navigate("/");
+      navigate("/trainee");
     }
   }, [currentUser, navigate]);
 
@@ -29,7 +28,7 @@ export default function Signin() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${BACKEND_URL}/api/auth/signin`, {
+      const res = await fetch(`${BACKEND_URL}/api/login?type=f`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +43,7 @@ export default function Signin() {
       }
       localStorage.setItem("token", data.token);
       dispatch(signInSuccess(data));
-      navigate("/");
+      navigate("/trainee");
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
@@ -53,7 +52,7 @@ export default function Signin() {
   return (
     <div className="px-16 max-w-lg mx-auto my-24">
       <h1 className="text-3xl sm:text-4xl text-center font-extrabold my-7">
-        Sign In
+      Trainee Sign In
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input

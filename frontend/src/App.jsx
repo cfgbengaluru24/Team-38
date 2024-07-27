@@ -1,24 +1,25 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Signin from "./pages/Signin";
-import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
-import PrivateRoute from "./components/PrivateRoute";
+
+import TraineeSignin from "./pages/TraineeSignin";
+import TrainerSignin from "./pages/TrainerSignin";
+import TraineeSignup from "./pages/TraineeSignup";
+import Trainee from "./pages/Trainee";
+import Trainer from "./pages/Trainer";
 import Header from "./components/Header";
 
 function App() {
   return (
     <BrowserRouter>
-    <Header/>
+      <Header />
       <Routes>
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-
-        <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-        </Route>
+        <Route path="/trainee-signin" element={<TraineeSignin />} />
+        <Route path="/trainee-signup" element={<TraineeSignup />} />
+        <Route path="/trainer-signin" element={<TrainerSignin />} />
+        <Route path="/trainee" element={<Trainee />} />
+        <Route path="/trainer" element={<Trainer />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
