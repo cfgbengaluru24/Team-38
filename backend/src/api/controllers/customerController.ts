@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../../utils/db";
+import multer from 'multer';
+
 
 export const enterCustomerDetails = async (req: Request, res: Response) => {
 	const { name, email, trainerId } = req.body;
@@ -21,16 +23,21 @@ export const enterCustomerDetails = async (req: Request, res: Response) => {
 };
 
 export const sendData = async (req: Request, res: Response) => {
-	const { userRole } = req;
-	if (userRole !== "advanced")
-		return res.status(403).json({ msg: "not authorized to send data!" });
+    const { userRole } = req;
+    if (userRole !== "advanced")
+        return res.status(403).json({ msg: "not authorized to send data!" });
 
-	try {
-		const file = req.file;
-		console.log("File uploaded! ", file);
-		res.json({ message: 'File uploaded successfully', file: file });
-	}
-	catch (e: any) {
-		return res.status(500).json({msg: "error! " + e.message});
-	}
+    try {
+        if (!req.file) {
+            return res.status(400).json({ msg: "No file uploaded" });
+        }
+        console.log("File uploaded! ", req.file);
+        res.json({ message: 'File uploaded successfully', file: req.file });
+    }
+    catch (e: any) {
+        if (e instanceof multer.MulterError) {
+            return res.status(400).json({ msg: "Multer error: " + e.message });
+        }
+        return res.status(500).json({ msg: "Server error: " + e.message });
+    }
 };
