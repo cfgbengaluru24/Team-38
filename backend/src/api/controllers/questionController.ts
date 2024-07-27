@@ -20,7 +20,7 @@ export const fetchQuestions = async(req: Request, res: Response)=>{
         return res.status(400).json(e.message)
     }
 }
-
+  
 export const enterQuestions = async (req: Request, res: Response) => {
     return res.status(200).json({msg: "Sucess"});
 }
