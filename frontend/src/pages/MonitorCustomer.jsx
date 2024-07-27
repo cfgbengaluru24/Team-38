@@ -32,7 +32,7 @@ const MonitorCustomer = () => {
 
   return (
     <div className="flex flex-wrap justify-center p-4 bg-gray-100 min-h-screen">
-      {customers.map((customer) => (
+      {customers && customers.length && customers.map((customer) => (
         <div
           key={customer.id}
           className="m-4 p-6 border border-gray-300 rounded-lg shadow-lg bg-white w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 hover:shadow-xl transition-shadow duration-300 ease-in-out cursor-pointer"

@@ -19,24 +19,17 @@ export const freshersDetails = async (req: Request, res: Response) => {
 };
 
 export const customersDetails = async (req: Request, res: Response) => {
-	const { userRole } = req;
-	const { id } = req.query;
+	const { userRole, id } = req;
 
 	if (userRole !== "advanced") {
 		return res.status(403).json({ msg: "you are not authorized!" });
 	}
 
-	if (!id)
-		return res.status(400).json({ msg: "id not found! enter id please!" });
-
 	try {
-		const data = await prisma.advanced.findFirst({
+		const data = await prisma.customer.findMany({
 			where: {
-				id: id as string,
-			},
-			include: {
-				Customer: true,
-			},
+				trainerId: id
+			}
 		});
 
 		if (!data) {
