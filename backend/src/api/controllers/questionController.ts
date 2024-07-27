@@ -30,7 +30,6 @@ export const enterQuestions = async (req: Request, res: Response) => {
     if(!userAnswers) return res.status(400).json({
         msg: "no data received!"
     });
-
     try {
         const questions = await prisma.testQuestions.findMany();
         const qAns = new Map<string, number>();
