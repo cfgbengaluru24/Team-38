@@ -1,6 +1,7 @@
 import express from "express";
 import {
   fetchModules,
+  markAsDone,
   signup
 } from "../controllers/fresherController";
 import { authMiddleware } from "../controllers/middleware";
@@ -12,9 +13,10 @@ export const api = express();
 
 api.post("/signup", signup);
 api.use(authMiddleware);
-api.get("/module", fetchModules);
-api.get("/test", fetchQuestions);
-api.post("/test", enterQuestions);
+api.get("/module", fetchModules);          // fetch modules that are assigned
+api.get("/test", fetchQuestions);          // Fetch questions to answer
+api.post("/test", enterQuestions);         // Respond to questions
+api.post("/test/:moduleId", markAsDone);   // Marking modules as done
 // api.get("/", getAllStudents);
 // api.get("/:studentId", getSpecificStudent);
 // api.get("/usn/:usn", getSpecificStudentByUsn);
