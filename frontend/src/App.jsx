@@ -9,6 +9,7 @@ import Trainee from "./pages/Trainee";
 import Trainer from "./pages/Trainer";
 import Test from "./pages/Test";
 import MonitorTrainee from "./pages/MonitorTrainee";
+import MonitorCustomer from "./pages/MonitorCustomer";
 import TraineeInfo from "./pages/TraineeInfo";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/trainee/test" element={<Test />} />
         <Route path="/monitortrainee" element={<MonitorTrainee />} />
+        <Route path="/monitorcustomer" element={<MonitorCustomer />} />
         <Route path="/trainee-info/:id" element={<TraineeInfo />} />
       </Routes>
     </BrowserRouter>
