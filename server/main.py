@@ -6,6 +6,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from dotenv import load_dotenv
 from os import getenv
+import io
 
 load_dotenv()
 MONGO_URL = getenv('MONGO_URL')
@@ -21,14 +22,37 @@ CORS(app)
 
 @app.route('/analyze_report', methods=['POST'])
 def analyze_report():
-    try:
-        if 'audio' not in request.files:
+    # try:
+        if 'file' not in request.files:
             return jsonify({"error": "No audio file provided"}), 400
+        print(request)
+        audio_file = request.files['file']
         
-        audio_file = request.files['audio']
         
+        # Convert audio_file to multipart/form-data
+        if audio_file.content_type == 'application/octet-stream':
+            # Create a new file-like object with the correct content type
+            multipart_file = io.BytesIO(audio_file.read())
+            multipart_file.name = audio_file.filename
+            multipart_file.content_type = 'multipart/form-data'
+            
+            # Replace the original audio_file with the new multipart_file
+            audio_file = multipart_file
+        # Save the audio file in mp3 format
+        from pydub import AudioSegment
+        
+        # Convert the audio to mp3 format
+        audio = AudioSegment.from_file(audio_file)
+        mp3_filename = f"{audio_file.filename.rsplit('.', 1)[0]}.mp3"
+        audio.export(mp3_filename, format="mp3")
+        
+        # Update audio_file to point to the new mp3 file
+        audio_file = open(mp3_filename, 'rb')
+        # with open(audio_file.filename, 'rb') as file:
+        #     binary_data = file.read()
+        print(f"Audio file content type: {audio_file}")
         trainee_report = translate(audio_file)
-        
+        print(trainee_report)
         system_prompt = """
         You are an assistant for an NGO Best Practices Foundation.
         You are given a report of a trainee's week's summary about how their business has performed. Your task is to extract insights from the report given by the trainee.
@@ -54,8 +78,8 @@ def analyze_report():
         
         return jsonify(insights), 200
     
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    # except Exception as e:
+    #     return jsonify({"error": str(e)}), 500
 
 
 @app.route('/chatbot', methods=['POST'])

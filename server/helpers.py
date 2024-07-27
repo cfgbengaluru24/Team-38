@@ -5,6 +5,8 @@ import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 import weaviate
 from weaviate.gql.get import HybridFusion
+from io import BytesIO
+from pydub import AudioSegment
 
 load_dotenv()
 WEAVIATE_AUTH_KEY = getenv("WEAVIATE_AUTH_KEY")
@@ -25,6 +27,14 @@ weaviate_client = weaviate.Client(
 
 def translate(audio_file):
     try:
+        # # Convert audio file to mp3 if it's not already
+        # if audio_file.content_type != 'audio/mpeg':
+        #     audio = AudioSegment.from_file(audio_file)
+        #     mp3_buffer = BytesIO()
+        #     audio.export(mp3_buffer, format="mp3")
+        #     mp3_buffer.seek(0)
+        #     audio_file = mp3_buffer
+
         translation = client.audio.translations.create(
             model="whisper-1", 
             file=audio_file
