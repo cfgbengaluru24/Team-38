@@ -1,8 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const userRouter = require("./routes/user.route");
-const authRouter = require("./routes/auth.route");
+const indexRouter = require("./api/routes/index");
+// import { api as indexRouter } from "./api/routes/index";
 const cors = require("cors");
 
 dotenv.config();
@@ -28,8 +28,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.use("/api/user", userRouter);
-app.use("/api/auth", authRouter);
+app.use(indexRouter)
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

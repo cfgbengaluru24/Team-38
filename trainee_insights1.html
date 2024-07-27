@@ -1,0 +1,61 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trainee Report Insights</title>
+        <style>
+            body { font-family: Arial, sans-serif; }
+            form { max-width: 600px; margin: 0 auto; }
+            label { display: block; margin-top: 10px; }
+            input { width: 100%; padding: 5px; margin-top: 5px; }
+            button { margin-top: 20px; padding: 10px; }
+        </style>
+    </head>
+    <body>
+        <form id="insightsForm">
+            <h2>Trainee Report Insights</h2>
+            
+            <label for="Whole Wheat Bread Sales">Whole Wheat Bread Sales:</label>
+            <input type="text" id="Whole Wheat Bread Sales" name="Whole Wheat Bread Sales" value="80 loaves at ₹40/loaf">
+        
+            <label for="White Bread Sales">White Bread Sales:</label>
+            <input type="text" id="White Bread Sales" name="White Bread Sales" value="100 loaves at ₹35/loaf">
+        
+            <label for="Croissants Sales">Croissants Sales:</label>
+            <input type="text" id="Croissants Sales" name="Croissants Sales" value="150 pieces at ₹25/piece">
+        
+            <label for="Chocolate Chip Cookies Sales">Chocolate Chip Cookies Sales:</label>
+            <input type="text" id="Chocolate Chip Cookies Sales" name="Chocolate Chip Cookies Sales" value="300 pieces at ₹10/piece">
+        
+            <label for="Fruit Tarts Sales">Fruit Tarts Sales:</label>
+            <input type="text" id="Fruit Tarts Sales" name="Fruit Tarts Sales" value="50 pieces at ₹30/piece">
+        
+            <label for="Total Expenses">Total Expenses:</label>
+            <input type="text" id="Total Expenses" name="Total Expenses" value="₹9,800 (Ingredients: ₹4,500, Electricity and gas: ₹1,200, Packaging materials: ₹600, Shop rent: ₹2,000, Helper's salary: ₹1,500)">
+        
+            <label for="Popular Product">Popular Product:</label>
+            <input type="text" id="Popular Product" name="Popular Product" value="New chocolate chip cookie recipe">
+        
+            <label for="Sales Pattern">Sales Pattern:</label>
+            <input type="text" id="Sales Pattern" name="Sales Pattern" value="Higher sales on weekends compared to weekdays">
+        
+            <label for="New Product Plan">New Product Plan:</label>
+            <input type="text" id="New Product Plan" name="New Product Plan" value="Cheese straws based on customer requests">
+        
+            <label for="Potential B2B Opportunity">Potential B2B Opportunity:</label>
+            <input type="text" id="Potential B2B Opportunity" name="Potential B2B Opportunity" value="Supplying pastries to a local café">
+        
+            <button type="submit">Save Changes</button>
+        </form>
+        <script>
+            document.getElementById('insightsForm').onsubmit = function(e) {
+                e.preventDefault();
+                // Here you can add code to handle form submission
+                console.log('Form submitted');
+            };
+        </script>
+    </body>
+    </html>
+    

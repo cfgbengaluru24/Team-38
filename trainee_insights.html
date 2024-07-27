@@ -1,0 +1,61 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trainee Report Insights</title>
+        <style>
+            body { font-family: Arial, sans-serif; }
+            form { max-width: 600px; margin: 0 auto; }
+            label { display: block; margin-top: 10px; }
+            input { width: 100%; padding: 5px; margin-top: 5px; }
+            button { margin-top: 20px; padding: 10px; }
+        </style>
+    </head>
+    <body>
+        <form id="insightsForm">
+            <h2>Trainee Report Insights</h2>
+            
+            <label for="Total Revenue from Tomatoes">Total Revenue from Tomatoes:</label>
+            <input type="text" id="Total Revenue from Tomatoes" name="Total Revenue from Tomatoes" value="₹2,000">
+        
+            <label for="Total Revenue from Onions">Total Revenue from Onions:</label>
+            <input type="text" id="Total Revenue from Onions" name="Total Revenue from Onions" value="₹2,250">
+        
+            <label for="Total Revenue from Potatoes">Total Revenue from Potatoes:</label>
+            <input type="text" id="Total Revenue from Potatoes" name="Total Revenue from Potatoes" value="₹2,500">
+        
+            <label for="Total Revenue from Spinach">Total Revenue from Spinach:</label>
+            <input type="text" id="Total Revenue from Spinach" name="Total Revenue from Spinach" value="₹450">
+        
+            <label for="Total Revenue from Carrots">Total Revenue from Carrots:</label>
+            <input type="text" id="Total Revenue from Carrots" name="Total Revenue from Carrots" value="₹1,400">
+        
+            <label for="Total Expenses">Total Expenses:</label>
+            <input type="text" id="Total Expenses" name="Total Expenses" value="₹6,600">
+        
+            <label for="High Demand Vegetables">High Demand Vegetables:</label>
+            <input type="text" id="High Demand Vegetables" name="High Demand Vegetables" value="Tomatoes and Spinach">
+        
+            <label for="Impact of Weather">Impact of Weather:</label>
+            <input type="text" id="Impact of Weather" name="Impact of Weather" value="Heavy rain on Wednesday reduced customer visits">
+        
+            <label for="Customer Feedback">Customer Feedback:</label>
+            <input type="text" id="Customer Feedback" name="Customer Feedback" value="Positive feedback on freshness; suggestion to sell herbs">
+        
+            <label for="Planned Strategies">Planned Strategies:</label>
+            <input type="text" id="Planned Strategies" name="Planned Strategies" value="Increase stock of tomatoes and spinach, offer bulk purchase discounts, set up booth earlier">
+        
+            <button type="submit">Save Changes</button>
+        </form>
+        <script>
+            document.getElementById('insightsForm').onsubmit = function(e) {
+                e.preventDefault();
+                // Here you can add code to handle form submission
+                console.log('Form submitted');
+            };
+        </script>
+    </body>
+    </html>
+    

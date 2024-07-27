@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
 import json
+from flask_cors import CORS
 from helpers import translate, handle_messages, report_analysis
 
 app = Flask(__name__)
-
+CORS(app)
 
 
 @app.route('/analyze_report', methods=['POST'])
@@ -44,6 +45,7 @@ def analyze_report():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# TODO: Update to add RAG here with weaviate
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     try:
@@ -82,6 +84,31 @@ def chatbot():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/trainee-progress', methods=['GET'])
+def trainee_progress():
+    try:
+        trainee_id = request.args.get('trainee_id')
+        if not trainee_id:
+            return jsonify({"error": "No trainee ID provided"}), 400
+
+        # This is a placeholder for actual database query logic
+        # Should get from MongoDB
+        progress_data = [
+            {"date": "2023-01-01", "score": 75},
+            {"date": "2023-02-01", "score": 80},
+            {"date": "2023-03-01", "score": 85},
+            {"date": "2023-04-01", "score": 90}
+        ]
+
+        return jsonify({
+            "trainee_id": trainee_id,
+            "progress": progress_data
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == "__main__":
