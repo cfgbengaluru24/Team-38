@@ -3,6 +3,8 @@ const { signup, signin, google, signOut } = require("../controllers/auth.control
 
 const router = express.Router();
 
+// /api/auth
+
 router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/google", google);

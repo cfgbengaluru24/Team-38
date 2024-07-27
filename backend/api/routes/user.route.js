@@ -4,6 +4,8 @@ const { verifyToken } = require("../utils/verifyToken");
 
 const router = express.Router();
 
+// /api/user
+
 router.post("/update/:id", verifyToken, updateUser);
 router.delete("/delete/:id", verifyToken, deleteUser);
 
