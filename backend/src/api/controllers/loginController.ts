@@ -21,7 +21,7 @@ export const login = async (req: Request, res: Response) => {
 				},
 			});
 
-			if (!result) {
+			if (!result || result.testScore) {
 				return res.status(400).json({
 					err: "no such user exists!",
 				});
@@ -55,5 +55,43 @@ export const login = async (req: Request, res: Response) => {
 			});
 		}
 	} else {
+		try {
+			const result = await prisma.advanced.findUnique({
+				where: {
+					username
+				}
+			});
+			if (!result) {
+				return res.status(400).json({
+					err: "no such user exists!",
+				});
+			}
+
+			const match = await bcrypt.compare(password, result.password);
+			console.log("Match is: ", match);
+
+			if (match) {
+				const token = jwt.sign(
+					{
+						id: result.id,
+						userRole: "advanced",
+						username: result.username,
+					},
+					process.env.JWT_SECRET as string,
+					{ expiresIn: "6h" }
+				);
+				return res.status(200).json({
+					accessToken: `${token}`,
+					id: result.id,
+					userRole: "advanced",
+				});
+			} else
+				res.status(400).json({
+					err: "invalid credentials!",
+				});
+		}
+		catch (e: any) {
+			return res.status(500).json({msg: "error! " + e.message});
+		}
 	}
 };
