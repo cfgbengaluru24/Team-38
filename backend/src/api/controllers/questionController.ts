@@ -1,7 +1,7 @@
 import { Request,Response } from "express"
 import prisma from "../../utils/db"
 
-export const fetchQuestions = async(req:Request,res:Response)=>{
+export const fetchQuestions = async(req: Request, res: Response)=>{
     try{
         const response = await prisma.testQuestions.findMany({
             select:{
@@ -17,4 +17,8 @@ export const fetchQuestions = async(req:Request,res:Response)=>{
     {
         console.log("question fetch catch : ",err)
     }
+}
+
+export const enterQuestions = async (req: Request, res: Response) => {
+    return res.status(200).json({msg: "Sucess"});
 }

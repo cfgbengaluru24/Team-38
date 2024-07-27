@@ -9,7 +9,7 @@ import {
   // updateStudentDetails,
 } from "../controllers/fresherController";
 import { authMiddleware } from "../controllers/middleware";
-import { fetchQuestions } from "../controllers/questionController";
+import { enterQuestions, fetchQuestions } from "../controllers/questionController";
 
 // Any endpoint here hits the /f/ endpoint
 
@@ -17,7 +17,9 @@ export const api = express();
 
 api.post("/signup", signup);
 api.use(authMiddleware);
-api.get('/test',fetchQuestions)
+api.get("/module", fetchModules);
+api.get("/test", fetchQuestions);
+api.post("/test", enterQuestions);
 // api.get("/", getAllStudents);
 // api.get("/:studentId", getSpecificStudent);
 // api.get("/usn/:usn", getSpecificStudentByUsn);
