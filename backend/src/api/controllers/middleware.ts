@@ -27,9 +27,12 @@ export async function authMiddleware(
 			jwtToken,
 			process.env.JWT_SECRET as string
 		) as CustomJwtPayload;
-		req.userRole = response.userRole;
-		req.id = response.id;
-
+		
+		console.log("RESPONSE IS: ", response);	
+			
+		req.userRole = response.userRole;	
+		req.id = response.id;	
+			
 		if (response.userRole && response.id) {
 			next();
 		} else {

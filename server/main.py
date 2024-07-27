@@ -1,7 +1,19 @@
 from flask import Flask, request, jsonify
 import json
 from flask_cors import CORS
-from helpers import translate, handle_messages, report_analysis
+from helpers import translate, handle_messages, report_analysis, search_KB
+from pymongo import MongoClient
+from bson import ObjectId
+from dotenv import load_dotenv
+from os import getenv
+
+load_dotenv()
+MONGO_URL = getenv('MONGO_URL')
+
+# MongoDB connection
+client = MongoClient(MONGO_URL)
+db = client['jpmc']
+
 
 app = Flask(__name__)
 CORS(app)
@@ -45,20 +57,32 @@ def analyze_report():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# TODO: Update to add RAG here with weaviate
+
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     try:
         data = request.json
         user_message = data.get('message')
         chat_history = data.get('history', [])
+        # Get word count of the message
+        word_count = len(user_message.split())
+        
+        # Set alpha value based on word count
+        if word_count < 5:
+            alpha_val = 0.3
+        else:
+            alpha_val = 0.6
 
         if not user_message:
             return jsonify({"error": "No message provided"}), 400
 
+        # Search knowledge base
+        kb_results = search_KB(user_message, alpha_val)
+        kb_context = "\n".join([result['section'] for result in kb_results])
+
         # Prepare the messages for the API call
         messages = [
-            {"role": "system", "content": "You are a helpful assistant for the Best Practices Foundation NGO."}
+            {"role": "system", "content": "You are a helpful assistant for the Best Practices Foundation NGO. Use the following context from our knowledge base to inform your responses:\n\n" + kb_context},
         ]
         
         # Add chat history
@@ -72,7 +96,7 @@ def chatbot():
 
         response = handle_messages(messages)
 
-        assistant_response = response.choices[0].message.content
+        assistant_response = json.loads(response)["response"]
 
         # Update chat history
         chat_history.append({"user": user_message, "assistant": assistant_response})
@@ -84,6 +108,7 @@ def chatbot():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
     
 @app.route('/trainee-progress', methods=['GET'])
 def trainee_progress():
@@ -92,14 +117,11 @@ def trainee_progress():
         if not trainee_id:
             return jsonify({"error": "No trainee ID provided"}), 400
 
-        # This is a placeholder for actual database query logic
-        # Should get from MongoDB
-        progress_data = [
-            {"date": "2023-01-01", "score": 75},
-            {"date": "2023-02-01", "score": 80},
-            {"date": "2023-03-01", "score": 85},
-            {"date": "2023-04-01", "score": 90}
-        ]
+        # Query MongoDB for trainee progress
+        progress_data = list(db.trainee_progress.find(
+            {"trainee_id": ObjectId(trainee_id)},
+            {"_id": 0, "date": 1, "score": 1}
+        ))
 
         return jsonify({
             "trainee_id": trainee_id,
@@ -108,7 +130,6 @@ def trainee_progress():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 
 if __name__ == "__main__":
