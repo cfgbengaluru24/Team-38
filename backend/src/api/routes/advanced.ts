@@ -19,7 +19,7 @@ export const api = express();
 api.use(authMiddleware);
 api.post("/signup", signup);
 api.post("/freshers", freshersDetails);
-api.post("/customers",customersDetails)
+api.post("/customers", customersDetails)
 // api.get("/", getAllTeachers);
 // api.get("/scores", getClassScores);
 // api.get("/:teacherId", getSpecificTeacher);

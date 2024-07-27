@@ -49,3 +49,17 @@ export const signup = async (req: Request, res: Response) => {
 		});
 	}
 };
+
+export const getChartData = async (req: Request, res: Response) => {
+	const { userRole } = req;
+	if (userRole !== "advanced")
+		return res.status(403).json({ msg: "you are not trainer" });
+
+	const { id } = req.query;
+	if (!id)
+		return res
+			.status(400)
+			.json({ msg: "no id found, please send that also noob" });
+
+	
+};
