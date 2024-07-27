@@ -4,23 +4,26 @@ import { BACKEND_URL } from "../config";
 
 const Trainee = () => {
   const { currentUser } = useSelector((state) => state.user);
-  const [modules, setModules] = useState({});
+  const [modules, setModules] = useState([]);
 
   useEffect(() => {
     const fetchModules = async () => {
-      console.log(currentUser)
-      const res = await fetch(
-        `${BACKEND_URL}/api/f/module?id=${currentUser.id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
-      const data = await res.json();
-      setModules(data);
+      try {
+        const res = await fetch(
+          `${BACKEND_URL}/api/f/module?id=${currentUser.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        const data = await res.json();
+        setModules(data);
+      } catch (error) {
+        console.error("Error fetching modules:", error);
+      }
     };
 
     fetchModules();
@@ -28,18 +31,18 @@ const Trainee = () => {
 
   return (
     <div className="flex flex-wrap justify-center">
-      {Object.entries(modules).map(([moduleName, completed]) => (
+      {modules.map((module) => (
         <div
-          key={moduleName}
+          key={module.moduleId}
           className="m-4 p-4 border rounded-lg shadow-lg w-64 bg-white"
         >
-          <h2 className="text-xl font-bold mb-2">{moduleName}</h2>
+          <h2 className="text-xl font-bold mb-2">{module.moduleName}</h2>
           <p
             className={`text-lg ${
-              completed ? "text-green-500" : "text-red-500"
+              module.completed ? "text-green-500" : "text-red-500"
             }`}
           >
-            {completed ? "Completed" : "Not Completed"}
+            {module.completed ? "Completed" : "Not Completed"}
           </p>
         </div>
       ))}
