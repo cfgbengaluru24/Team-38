@@ -25,7 +25,7 @@ const Banner = () => {
           onClick={openModal}
           className="bg-blue-500 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          Donate
+          Support Us
         </button>
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>

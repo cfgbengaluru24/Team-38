@@ -8,7 +8,7 @@ import ChatbotUI  from './ChatbotUI';
 const Trainer = () => {
   const navigate = useNavigate();
   return (
-    <div className="relative flex justify-center items-center min-h-screen p-4 bg-green-50">
+    <div className="relative flex justify-center items-center min-h-screen p-4 bg-green-100">
       <div className="box flex flex-col md:flex-row justify-center items-center bg-white p-6 rounded-lg shadow-lg">
         <div className="right md:w-1/2 mb-4 md:mb-0 md:mr-4">
           <img
@@ -17,19 +17,18 @@ const Trainer = () => {
             className="w-full h-auto rounded-lg"
           />
         </div>
-        <div className="left md:w-1/2 text-center md:text-left">
+        <div className="left md:w-1/2 text-center">
           <h2 className="text-xl md:text-2xl font-bold mb-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, eum.
+            Get Started
           </h2>
-          <p className="mb-4">Lorem ipsum dolor sit amet.</p>
           <div className="flex flex-col items-center">
             <Link to="/monitortrainee">
-              <button className="bg-green-500 text-white px-4 py-2 rounded mb-2 w-full max-w-xs hover:opacity-85">
+              <button className="bg-green-600 text-white px-4 py-2 rounded mb-2 w-full max-w-xs hover:bg-green-700">
                 Monitor Trainee
               </button>
             </Link>
             <Link to="/monitorcustomer">
-              <button className="bg-green-500 text-white px-4 py-2 rounded w-full max-w-xs hover:opacity-85">
+              <button className="bg-green-600 text-white px-4 py-2 rounded w-full max-w-xs hover:bg-green-700">
                 Monitor Customer
               </button>
             </Link>
