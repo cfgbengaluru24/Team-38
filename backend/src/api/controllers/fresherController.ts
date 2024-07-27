@@ -69,8 +69,18 @@ export const fetchModules = async (req: Request, res: Response) => {
 		const result = await prisma.fresherModules.findMany({
 			where: {
 				fresherId: id as string
+			},
+			include: {
+				Modules: true
 			}
 		});
+		const response = result.map((item) => ({
+			moduleId: item.moduleId,
+			moduleName: item.Modules.moduleName,
+			completed: item.completed
+		}));
+
+		return res.status(200).json(response);
 	}
 	catch(e: any) {
 		res.status(400).json({msg: "Error in fetching data!"});
