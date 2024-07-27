@@ -34,7 +34,7 @@ def translate(audio_file):
 def report_analysis(system_prompt, trainee_report):
     try:
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": trainee_report}
@@ -49,7 +49,7 @@ def report_analysis(system_prompt, trainee_report):
 def handle_messages(messages):
     try:
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4-turbo",
             messages=[
                 messages
             ],
