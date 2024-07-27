@@ -4,3 +4,4 @@ node_modules/
 trainee*.html
 *.mp3
 extras
+__pycache__/

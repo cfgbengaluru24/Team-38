@@ -1,6 +1,8 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 from os import getenv
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 import weaviate
 from weaviate.gql.get import HybridFusion
 
