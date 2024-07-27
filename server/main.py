@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
 import json
+from flask_cors import CORS
 from helpers import translate, handle_messages, report_analysis
 
 app = Flask(__name__)
-
+CORS(app)
 
 
 @app.route('/analyze_report', methods=['POST'])
