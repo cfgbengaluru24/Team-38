@@ -6,7 +6,6 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice";
-import OAuth from "../components/OAuth";
 import { BACKEND_URL } from "../config";
 
 export default function TraineeSignup() {
