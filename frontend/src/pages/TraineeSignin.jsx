@@ -10,16 +10,18 @@ import { BACKEND_URL } from "../config";
 
 export default function TraineeSignin() {
   const [formData, setFormData] = useState({});
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading, error } = useSelector((state) => state);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
+    if (e.target && e.target.id) {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -32,17 +34,21 @@ export default function TraineeSignin() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        // credentials: "include",
       });
       const data = await res.json();
-
-      if (data.success === false) {
+      console.log(data);
+      console.log(res)
+      if (res.ok === false) {
         dispatch(signInFailure(data.message));
         return;
       }
       localStorage.setItem("token", data.accessToken);
+      console.log(data);
       dispatch(signInSuccess(data));
       navigate("/trainee");
     } catch (error) {
+      console.log(error);
       dispatch(signInFailure(error.message));
     }
   };
