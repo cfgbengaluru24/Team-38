@@ -22,7 +22,6 @@ export const customersDetails = async (req: Request, res: Response) => {
     if (userRole !== "advanced") {
         return res.status(403).json({ msg: "you are not authorized!" });
     }
-
     try {
         const data = await prisma.advanced.findFirst({
             where: {
