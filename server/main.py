@@ -84,7 +84,7 @@ def analyze_report():
 
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
-    try:
+    # try:
         data = request.json
         user_message = data.get('message')
         chat_history = data.get('history', [])
@@ -106,7 +106,7 @@ def chatbot():
 
         # Prepare the messages for the API call
         messages = [
-            {"role": "system", "content": "You are a helpful assistant for the Best Practices Foundation NGO. Use the following context from our knowledge base to inform your responses:\n\n" + kb_context},
+            {"role": "system", "content": "You are a helpful assistant for the Best Practices Foundation NGO. Do not output large more than 3-4 sentences, try to be concise. Use the following context from our knowledge base to inform your responses:\n\n" + kb_context},
         ]
         
         # Add chat history
@@ -120,7 +120,7 @@ def chatbot():
 
         response = handle_messages(messages)
 
-        assistant_response = json.loads(response)["response"]
+        assistant_response = response
 
         # Update chat history
         chat_history.append({"user": user_message, "assistant": assistant_response})
@@ -130,8 +130,8 @@ def chatbot():
             "history": chat_history
         }), 200
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    # except Exception as e:
+    #     return jsonify({"error": str(e)}), 500
 
     
 @app.route('/trainee-progress', methods=['GET'])

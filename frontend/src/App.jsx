@@ -11,6 +11,7 @@ import Test from "./pages/Test";
 import MonitorTrainee from "./pages/MonitorTrainee";
 import MonitorCustomer from "./pages/MonitorCustomer";
 import TraineeInfo from "./pages/TraineeInfo";
+import ChatbotUI from "./pages/ChatbotUI";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/monitortrainee" element={<MonitorTrainee />} />
         <Route path="/monitorcustomer" element={<MonitorCustomer />} />
         <Route path="/trainee-info/:id" element={<TraineeInfo />} />
+        <Route path="/chatbot" element={<ChatbotUI />} />
       </Routes>
     </BrowserRouter>
   );

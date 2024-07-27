@@ -61,12 +61,10 @@ def report_analysis(system_prompt, trainee_report):
 def handle_messages(messages):
     try:
         response = client.chat.completions.create(
-            model="gpt-4-turbo",
-            messages=[
-                messages
-            ],
+            model="gpt-4o",
+            messages=messages,
             temperature=0,
-            response_format={"type": "json_object"}
+            # response_format={"type": "json_object"}
         )
         return response.choices[0].message.content
     except Exception as e:

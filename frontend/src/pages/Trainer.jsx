@@ -1,8 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import woman from '../assets/hero.jpg';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import ChatbotUI  from './ChatbotUI';
 
 const Trainer = () => {
+  const navigate = useNavigate();
   return (
     <div className="relative flex justify-center items-center min-h-screen p-4 bg-green-50">
       <div className="box flex flex-col md:flex-row justify-center items-center bg-white p-6 rounded-lg shadow-lg">
@@ -32,7 +36,7 @@ const Trainer = () => {
           </div>
         </div>
       </div>
-      <button className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+      <button className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500" onClick={() => navigate('/chatbot')}>
         Chatbot
       </button>
     </div>
