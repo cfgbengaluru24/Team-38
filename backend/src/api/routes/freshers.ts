@@ -1,12 +1,7 @@
 import express from "express";
 import {
   fetchModules,
-  // getAllStudents,
-  // getSpecificStudent,
-  // getSpecificStudentByUsn,
-  // getSpecificStudentScores,
-  signup,
-  // updateStudentDetails,
+  signup
 } from "../controllers/fresherController";
 import { authMiddleware } from "../controllers/middleware";
 import { enterQuestions, fetchQuestions } from "../controllers/questionController";
