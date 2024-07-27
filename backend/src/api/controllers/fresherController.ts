@@ -85,6 +85,14 @@ export const fetchModules = async (req: Request, res: Response) => {
 	}
 };
 
+export const markAsDone = async (req: Request, res: Response) => {
+	const moduleId = req.params.moduleId;
+	const id = req.body;
+	console.log("MOduel is: ", moduleId, " ", id);
+
+	return res.json({msg: "GGs"});	
+}
+
 // export const getAllStudents = async (req: Request, res: Response) => {
 // 	const { userRole } = req;
 
