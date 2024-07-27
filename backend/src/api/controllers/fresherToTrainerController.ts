@@ -8,6 +8,8 @@ export const freshersDetails = async (req: Request, res: Response) => {
 
 	try {
 		const data = await prisma.fresher.findMany();
+		console.log("DATA IS: ", data);
+		
 		if (!data) return res.status(404).json({ msg: "no data found!" });
 		res.status(200).json(data);
 	} catch (e: any) {

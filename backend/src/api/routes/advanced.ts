@@ -15,7 +15,7 @@ export const api = express();
 
 api.use(authMiddleware);
 api.post("/signup", signup);							// Tranfer fresher to advanced
-api.post("/freshers", freshersDetails);		// Fetch all fresher details
+api.get("/freshers", freshersDetails);		// Fetch all fresher details
 api.get("/customers", customersDetails); 	// Fetch all customers under this guy
 
 
