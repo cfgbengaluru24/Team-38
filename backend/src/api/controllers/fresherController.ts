@@ -87,11 +87,33 @@ export const fetchModules = async (req: Request, res: Response) => {
 
 export const markAsDone = async (req: Request, res: Response) => {
 	const moduleId = req.params.moduleId;
-	const id = req.body;
-	console.log("MOduel is: ", moduleId, " ", id);
+	const { id } = req;
 
-	return res.json({msg: "GGs"});	
-}
+	if (!moduleId || !id)
+		return res.status(400).json({ msg: "missing data bro!" });
+
+	try {
+		const result = await prisma.fresherModules.update({
+			where: {
+				fresherId_moduleId: {
+					fresherId: id,
+					moduleId,
+				},
+			},
+			data: {
+				completed: true,
+			},
+		});
+
+		if (!result) throw new Error("couldn't add data!");
+
+		return res.json({ msg: "Success!" });
+	} catch (e: any) {
+		return res.status(400).json({ msg: "Error! " + e.message });
+	}
+
+	return res.json({ msg: "GGs" });
+};
 
 // export const getAllStudents = async (req: Request, res: Response) => {
 // 	const { userRole } = req;
