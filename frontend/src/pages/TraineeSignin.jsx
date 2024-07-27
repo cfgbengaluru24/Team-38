@@ -5,7 +5,7 @@ import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSli
 import OAuth from "../components/OAuth";
 import { BACKEND_URL } from "../config";
 
-export default function Signin() {
+export default function TraineeSignin() {
   const [formData, setFormData] = useState({});
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
@@ -14,7 +14,7 @@ export default function Signin() {
 
   useEffect(() => {
     if (currentUser) {
-      navigate("/");
+      navigate("/trainee");
     }
   }, [currentUser, navigate]);
 
@@ -29,7 +29,7 @@ export default function Signin() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${BACKEND_URL}/api/auth/signin`, {
+      const res = await fetch(`${BACKEND_URL}/api/login/f`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export default function Signin() {
       }
       localStorage.setItem("token", data.token);
       dispatch(signInSuccess(data));
-      navigate("/");
+      navigate("/trainee");
     } catch (error) {
       dispatch(signInFailure(error.message));
     }

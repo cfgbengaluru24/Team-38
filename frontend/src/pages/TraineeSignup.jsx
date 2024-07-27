@@ -9,7 +9,7 @@ import {
 import OAuth from "../components/OAuth";
 import { BACKEND_URL } from "../config";
 
-export default function Signup() {
+export default function TraineeSignup() {
   const [formData, setFormData] = useState({});
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
@@ -33,7 +33,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${BACKEND_URL}/api/auth/signup`, {
+      const res = await fetch(`${BACKEND_URL}/api/signup/f`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export default function Signup() {
       dispatch(signInSuccess(data));
       localStorage.setItem("token", data.token);
 
-      navigate("/");
+      navigate("/trainee");
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
