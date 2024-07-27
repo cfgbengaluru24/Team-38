@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
 import 'tailwindcss/tailwind.css';
@@ -11,7 +11,7 @@ const MonitorCustomer = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       const res = await fetch(
-        `${BACKEND_URL}/api/a/customers`,
+        `${BACKEND_URL}/api/t/customers`,
         {
           method: "GET",
           headers: {
@@ -33,32 +33,22 @@ const MonitorCustomer = () => {
   };
 
   return (
-    <div>
-      <center><h1 className="text-3xl font-bold my-6">Customer Details</h1></center>
-      <div className="flex flex-wrap justify-center p-4 bg-gray-100 min-h-screen">
-        {customers && customers.length > 0 ? customers.map((customer) => (
-          <div
-            key={customer.id}
-            className="m-4 p-6 border border-gray-300 rounded-lg shadow-lg bg-white w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 hover:shadow-xl transition-shadow duration-300 ease-in-out cursor-pointer"
-            onClick={() => handleCardClick(customer.id)}
-          >
-            <img
-              src={img}
-              alt={customer.name}
-              className="w-full h-48 object-cover mb-4 rounded-md"
-            />
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 md:mb-4">{customer.name}</h2>
-            <p className="text-lg text-gray-600 mb-4 md:mb-6">{customer.email}</p>
-            <div className="flex justify-center">
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition-colors duration-300">
-                View Profile
-              </button>
-            </div>
+    <div className="flex flex-wrap justify-center p-4 bg-gray-100 min-h-screen">
+      {customers && customers.length && customers.map((customer) => (
+        <div
+          key={customer.id}
+          className="m-4 p-6 border border-gray-300 rounded-lg shadow-lg bg-white w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 hover:shadow-xl transition-shadow duration-300 ease-in-out cursor-pointer"
+          onClick={() => handleCardClick(customer.id)}
+        >
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 md:mb-4">{customer.name}</h2>
+          <p className="text-lg text-gray-600 mb-4 md:mb-6">{customer.email}</p>
+          <div className="flex justify-center">
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition-colors duration-300">
+              View Profile
+            </button>
           </div>
-        )) : (
-          <div className="text-center text-xl text-gray-500 mt-10">No customers available</div>
-        )}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };

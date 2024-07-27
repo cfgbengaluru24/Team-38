@@ -14,7 +14,9 @@ const userSlice = createSlice({
       state.loading = true;
     },
     signInSuccess: (state, action) => {
-      state.currentUser.id = action.payload.id;
+      console.log("insidestate", state.currentUser);
+      state.currentUser = "pulkit2";
+      state.currentUser = { id: "clz4ooror0000apnbfxn21myk" };
       state.loading = false;
       state.error = null;
     },

@@ -9,8 +9,9 @@ import Trainee from "./pages/Trainee";
 import Trainer from "./pages/Trainer";
 import Test from "./pages/Test";
 import MonitorTrainee from "./pages/MonitorTrainee";
-import TraineeInfo from "./pages/TraineeInfo";
 import MonitorCustomer from "./pages/MonitorCustomer";
+import TraineeInfo from "./pages/TraineeInfo";
+import ChatbotUI from "./pages/ChatbotUI";
 
 function App() {
   return (
@@ -24,8 +25,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/trainee/test" element={<Test />} />
         <Route path="/monitortrainee" element={<MonitorTrainee />} />
+        <Route path="/monitorcustomer" element={<MonitorCustomer />} />
         <Route path="/trainee-info/:id" element={<TraineeInfo />} />
-        <Route path="/monitorcustomer" element={<MonitorCustomer/>} ></Route>
+        <Route path="/chatbot" element={<ChatbotUI />} />
       </Routes>
     </BrowserRouter>
   );

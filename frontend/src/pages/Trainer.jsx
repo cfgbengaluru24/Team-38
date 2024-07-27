@@ -1,32 +1,41 @@
-import woman from "../assets/hero.jpg";
-import { Link } from "react-router-dom";
+/* eslint-disable no-unused-vars */
+import React from 'react';
+import woman from '../assets/hero.jpg';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import ChatbotUI  from './ChatbotUI';
 
 const Trainer = () => {
+  const navigate = useNavigate();
   return (
-    <div className="relative flex justify-center items-center min-h-screen p-4 bg-gray-50">
+    <div className="relative flex justify-center items-center min-h-screen p-4 bg-green-100">
       <div className="box flex flex-col md:flex-row justify-center items-center bg-white p-6 rounded-lg shadow-lg">
-        <div className="right mb-4 md:mb-0 md:mr-4">
+        <div className="right md:w-1/2 mb-4 md:mb-0 md:mr-4">
           <img
             src={woman}
             alt="Example Image"
-            className="w-32 h-32 md:w-48 md:h-48"
+            className="w-full h-auto rounded-lg"
           />
         </div>
-        <div className="left text-center md:text-left">
+        <div className="left md:w-1/2 text-center">
           <h2 className="text-xl md:text-2xl font-bold mb-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
-            eum.
+            Get Started
           </h2>
-          <p className="mb-4">Lorem ipsum dolor sit amet.</p>
-          <Link to="/monitortrainee"><button className="bg-blue-500 text-white px-4 py-2 rounded mb-2 md:mb-0 md:mr-2">
-            Monitor Trainee
-          </button></Link>
-          <Link to='/monitorcustomer'><button className="bg-green-500 text-white px-4 py-2 rounded">
-            Monitor Customer
-          </button></Link>
+          <div className="flex flex-col items-center">
+            <Link to="/monitortrainee">
+              <button className="bg-green-600 text-white px-4 py-2 rounded mb-2 w-full max-w-xs hover:bg-green-700">
+                Monitor Trainee
+              </button>
+            </Link>
+            <Link to="/monitorcustomer">
+              <button className="bg-green-600 text-white px-4 py-2 rounded w-full max-w-xs hover:bg-green-700">
+                Monitor Customer
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
-      <button className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <button className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500" onClick={() => navigate('/chatbot')}>
         Chatbot
       </button>
     </div>

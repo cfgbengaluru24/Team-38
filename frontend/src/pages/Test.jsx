@@ -34,7 +34,8 @@ const Test = () => {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const payload = questions.map((question) => ({
       id: question.id,
       answer: answers[question.id],
@@ -50,7 +51,8 @@ const Test = () => {
     });
 
     const result = await res.json();
-    setResult(result.percentage);
+    console.log(result);
+    setResult(result.percentange);
   };
 
   const handlePrint = () => {
@@ -59,8 +61,8 @@ const Test = () => {
 
   if (result !== null) {
     return (
-      <div className="container mx-auto p-4 text-center">
-        <h1 className="text-3xl font-bold mb-6">
+      <div className="container mx-auto p-6 text-center">
+        <h1 className={`text-4xl font-bold mb-6 ${result >= 70 ? "text-green-600" : "text-red-600"}`}>
           {result >= 70 ? "Congratulations!" : "Failed"}
         </h1>
         <p className="text-xl mb-6">
@@ -69,14 +71,19 @@ const Test = () => {
             : `You scored ${result}%. Unfortunately, you did not pass. Please try again.`}
         </p>
         {result >= 70 && (
-          <div className="border p-4 rounded-lg bg-white shadow-lg inline-block">
-            <h2 className="text-2xl font-bold mb-4">Certificate of Achievement</h2>
+          <div className="border p-6 rounded-lg bg-white shadow-lg inline-block mt-8">
+            <h2 className="text-2xl font-bold mb-4">
+              Certificate of Achievement
+            </h2>
             <p className="mb-4">This certifies that</p>
-            <p className="text-xl font-bold mb-4">{currentUser.name}</p>
-            <p>has successfully passed the training and is now a certified trainer.</p>
+            <p className="text-xl font-bold mb-4"> Mr. John Doe</p>
+            <p>
+              has successfully passed the training and is now a certified
+              trainer.
+            </p>
             <button
               onClick={handlePrint}
-              className="bg-green-500 text-white font-bold py-2 px-4 rounded mt-4"
+              className="bg-green-500 text-white font-bold py-2 px-4 rounded mt-4 hover:bg-green-700"
             >
               Download/Print Certificate
             </button>
@@ -87,33 +94,39 @@ const Test = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      {questions.map((question) => (
-        <div key={question.id} className="mb-6 p-4 border rounded-lg shadow-lg bg-white">
-          <h2 className="text-xl font-bold mb-4">{question.question}</h2>
-          <div className="flex flex-col">
-            {["optionA", "optionB", "optionC", "optionD"].map((optionKey) => (
-              <label key={optionKey} className="mb-2">
-                <input
-                  type="radio"
-                  name={`question-${question.id}`}
-                  value={optionKey}
-                  checked={answers[question.id] === optionKey}
-                  onChange={() => handleOptionChange(question.id, optionKey)}
-                  className="mr-2"
-                />
-                {question[optionKey]}
-              </label>
-            ))}
+    <div className="container mx-auto p-6">
+      <form onSubmit={handleSubmit}>
+        {questions.map((question) => (
+          <div
+            key={question.id}
+            className="mb-6 p-6 border rounded-lg shadow-lg bg-white"
+          >
+            <h2 className="text-xl font-bold mb-4">{question.question}</h2>
+            <div className="flex flex-col">
+              {["optionA", "optionB", "optionC", "optionD"].map((optionKey) => (
+                <label key={optionKey} className="mb-2">
+                  <input
+                    type="radio"
+                    name={`question-${question.id}`}
+                    value={optionKey}
+                    checked={answers[question.id] === optionKey}
+                    onChange={() => handleOptionChange(question.id, optionKey)}
+                    className="mr-2"
+                    required
+                  />
+                  {question[optionKey]}
+                </label>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
-      <button
-        onClick={handleSubmit}
-        className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
-      >
-        Submit
-      </button>
+        ))}
+        <button
+          type="submit"
+          className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4 hover:bg-blue-700"
+        >
+          Submit
+        </button>
+      </form>
     </div>
   );
 };

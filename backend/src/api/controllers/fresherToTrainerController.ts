@@ -8,6 +8,8 @@ export const freshersDetails = async (req: Request, res: Response) => {
 
 	try {
 		const data = await prisma.fresher.findMany();
+		console.log("DATA IS: ", data);
+		
 		if (!data) return res.status(404).json({ msg: "no data found!" });
 		res.status(200).json(data);
 	} catch (e: any) {
@@ -16,25 +18,44 @@ export const freshersDetails = async (req: Request, res: Response) => {
 	}
 };
 
-export const customersDetails = async (req: Request, res: Response) => {
+export const specificFresher = async (req: Request, res: Response) => {
 	const { userRole } = req;
-	const { id } = req.query;
+	if(userRole !== "advanced") return res.status(403).json({msg: "you are not authorized!"});
+	const { id } = req.params;
+
+	try {
+		const response = await prisma.fresherModules.findMany({
+			where: {
+				fresherId: id
+			},
+			include: {
+				Modules: true
+			}
+		});
+
+		console.log("RESPONSE IS LMAOOO: ", response);
+		
+
+		if(!response) throw new Error("No user found!");
+		res.status(200).json(response);
+	}
+	catch(e: any) {
+		return res.status(500).json({msg: "error! " + e.message});
+	}
+}
+
+export const customersDetails = async (req: Request, res: Response) => {
+	const { userRole, id } = req;
 
 	if (userRole !== "advanced") {
 		return res.status(403).json({ msg: "you are not authorized!" });
 	}
 
-	if (!id)
-		return res.status(400).json({ msg: "id not found! enter id please!" });
-
 	try {
-		const data = await prisma.advanced.findFirst({
+		const data = await prisma.customer.findMany({
 			where: {
-				id: id as string,
-			},
-			include: {
-				Customer: true,
-			},
+				trainerId: id
+			}
 		});
         console.log(data)
 

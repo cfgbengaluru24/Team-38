@@ -6,7 +6,7 @@ import { BACKEND_URL } from "../config";
 
 export default function TraineeSignup() {
   const [formData, setFormData] = useState({});
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading, error } = useSelector((state) => state);
 
   const navigate = useNavigate();
 
@@ -34,7 +34,9 @@ export default function TraineeSignup() {
       }
 
       navigate("/trainee-signin");
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error signing up:", error);
+    }
   };
 
   return (
