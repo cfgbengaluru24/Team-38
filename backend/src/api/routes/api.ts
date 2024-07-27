@@ -9,6 +9,6 @@ import { api as customerApi } from "./customer";
 export const apis = express();
 
 apis.use("/f", fresherApi);
-apis.use("/a", advancedApi);
+apis.use("/t", advancedApi);
 apis.use("/c", customerApi);
 apis.use("/signin", loginApi);

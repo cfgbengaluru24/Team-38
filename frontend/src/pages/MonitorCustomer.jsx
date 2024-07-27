@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
 import 'tailwindcss/tailwind.css';
@@ -10,7 +10,7 @@ const MonitorCustomer = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       const res = await fetch(
-        `${BACKEND_URL}/api/a/customers`,
+        `${BACKEND_URL}/api/t/customers`,
         {
           method: "GET",
           headers: {

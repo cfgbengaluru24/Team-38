@@ -19,7 +19,7 @@ const MonitorTrainee = () => {
           return;
         }
 
-        const res = await fetch(`${BACKEND_URL}/api/a/freshers`, {
+        const res = await fetch(`${BACKEND_URL}/api/t/freshers`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

@@ -10,7 +10,7 @@ import { BACKEND_URL } from "../config";
 
 export default function TraineeSignin() {
   const [formData, setFormData] = useState({});
-  const { currentUser, loading, error } = useSelector((state) => state.user);
+  const { loading, error } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ export default function TraineeSignin() {
       </form>
 
       <div className="flex gap-2 mt-3 justify-center items-center font-medium">
-        <div>Don't have an account?</div>
+        <div>Don&apos;t have an account?</div>
         <Link to={"/trainee-signup"}>
           <span className="text-blue-700 hover:underline">Sign up</span>
         </Link>
