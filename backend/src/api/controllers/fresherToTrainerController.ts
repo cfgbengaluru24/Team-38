@@ -36,6 +36,7 @@ export const customersDetails = async (req: Request, res: Response) => {
 				Customer: true,
 			},
 		});
+        console.log(data)
 
 		if (!data) {
 			return res.status(404).json({ msg: "no trainer found!" });

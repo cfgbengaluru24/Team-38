@@ -10,6 +10,7 @@ import Trainer from "./pages/Trainer";
 import Test from "./pages/Test";
 import MonitorTrainee from "./pages/MonitorTrainee";
 import TraineeInfo from "./pages/TraineeInfo";
+import MonitorCustomer from "./pages/MonitorCustomer";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/trainee/test" element={<Test />} />
         <Route path="/monitortrainee" element={<MonitorTrainee />} />
         <Route path="/trainee-info/:id" element={<TraineeInfo />} />
+        <Route path="/monitorcustomer" element={<MonitorCustomer/>} ></Route>
       </Routes>
     </BrowserRouter>
   );
