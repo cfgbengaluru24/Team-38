@@ -58,7 +58,7 @@ export default function TraineeSignup() {
   return (
     <div className="px-16 max-w-lg mx-auto my-24">
       <h1 className="text-3xl sm:text-4xl text-center font-extrabold my-7">
-        Sign Up
+      Trainee Sign Up
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input

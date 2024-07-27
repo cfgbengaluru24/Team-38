@@ -1,22 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
+
 import OAuth from "../components/OAuth";
 import { BACKEND_URL } from "../config";
 
-export default function TraineeSignin() {
+export default function TrainerSignup() {
   const [formData, setFormData] = useState({});
-  const { currentUser, loading, error } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (currentUser) {
-      navigate("/trainee");
-    }
-  }, [currentUser, navigate]);
 
   const handleChange = (e) => {
     setFormData({
@@ -29,7 +20,7 @@ export default function TraineeSignin() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${BACKEND_URL}/api/login/f`, {
+      const res = await fetch(`${BACKEND_URL}/api/signup/a`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,21 +30,18 @@ export default function TraineeSignin() {
       const data = await res.json();
 
       if (data.success === false) {
-        dispatch(signInFailure(data.message));
         return;
       }
       localStorage.setItem("token", data.token);
-      dispatch(signInSuccess(data));
-      navigate("/trainee");
-    } catch (error) {
-      dispatch(signInFailure(error.message));
-    }
+
+      navigate("/trainer");
+    } catch (error) {}
   };
 
   return (
     <div className="px-16 max-w-lg mx-auto my-24">
       <h1 className="text-3xl sm:text-4xl text-center font-extrabold my-7">
-      Trainee Sign In
+        Trainer Sign Up
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -63,7 +51,13 @@ export default function TraineeSignin() {
           id="username"
           onChange={handleChange}
         />
-
+        <input
+          type="email"
+          placeholder="email"
+          className="border p-3 rounded-lg"
+          id="email"
+          onChange={handleChange}
+        />
         <input
           type="password"
           placeholder="password"
@@ -72,26 +66,18 @@ export default function TraineeSignin() {
           onChange={handleChange}
         />
 
-        <button
-          disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80 font-medium mt-3"
-        >
-          {loading ? "Loading..." : "Sign In"}
+        <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80 font-semibold mt-3">
+          Sign Up
         </button>
         <OAuth />
       </form>
 
       <div className="flex gap-2 mt-3 justify-center items-center font-medium">
-        <div>Don't have an account?</div>
-        <Link to={"/signup"}>
-          <span className="text-blue-700 hover:underline">Sign up</span>
+        <div>Have an account?</div>
+        <Link to={"/trainer-signin"}>
+          <span className="text-blue-700 hover:underline">Sign in</span>
         </Link>
       </div>
-      {error && (
-        <div className="text-red-500 mt-5 text-center font-semibold">
-          {error}
-        </div>
-      )}
     </div>
   );
 }
