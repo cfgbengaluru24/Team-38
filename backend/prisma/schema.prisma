@@ -142,14 +142,14 @@ model FresherModules {
 }
 
 model Report {
-  id         String @id @default(cuid()) @map("_id")
-  customerId String
-  profit     Float
-  income     Float
-
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id           String @id @default(cuid()) @map("_id")
+  customerId   String
+  profit       Float
+  income       Float
   jsonInsights Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   Customer Customer @relation(fields: [customerId], references: [id])
 }
