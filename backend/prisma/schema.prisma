@@ -147,8 +147,9 @@ model Report {
   profit     Float
   income     Float
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  jsonInsights Json?
 
   Customer Customer @relation(fields: [customerId], references: [id])
 }
