@@ -17,13 +17,27 @@ def translate(audio_file):
     except Exception as e:
         raise Exception(f"Translation error: {str(e)}")
 
-def call_openai(system_prompt, trainee_report):
+def report_analysis(system_prompt, trainee_report):
     try:
         response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": trainee_report}
+            ],
+            temperature=0,
+            response_format={"type": "json_object"}
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        raise Exception(f"OpenAI API error: {str(e)}")
+    
+def handle_messages(messages):
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                messages
             ],
             temperature=0,
             response_format={"type": "json_object"}

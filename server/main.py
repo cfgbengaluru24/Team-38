@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import json
-from helpers import translate, call_openai
+from helpers import translate, handle_messages, report_analysis
 
 app = Flask(__name__)
 
@@ -36,13 +36,53 @@ def analyze_report():
         }
         """
         
-        response = call_openai(system_prompt, trainee_report)
+        response = report_analysis(system_prompt, trainee_report)
         insights = json.loads(response)
         
         return jsonify(insights), 200
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route('/chatbot', methods=['POST'])
+def chatbot():
+    try:
+        data = request.json
+        user_message = data.get('message')
+        chat_history = data.get('history', [])
+
+        if not user_message:
+            return jsonify({"error": "No message provided"}), 400
+
+        # Prepare the messages for the API call
+        messages = [
+            {"role": "system", "content": "You are a helpful assistant for the Best Practices Foundation NGO."}
+        ]
+        
+        # Add chat history
+        for message in chat_history:
+            messages.append({"role": "user", "content": message["user"]})
+            if "assistant" in message:
+                messages.append({"role": "assistant", "content": message["assistant"]})
+        
+        # Add the current user message
+        messages.append({"role": "user", "content": user_message})
+
+        response = handle_messages(messages)
+
+        assistant_response = response.choices[0].message.content
+
+        # Update chat history
+        chat_history.append({"user": user_message, "assistant": assistant_response})
+
+        return jsonify({
+            "response": assistant_response,
+            "history": chat_history
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)
