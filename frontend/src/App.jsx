@@ -9,6 +9,8 @@ import Trainee from "./pages/Trainee";
 import Trainer from "./pages/Trainer";
 import Header from "./components/Header";
 import Test from "./pages/Test";
+import MonitorTrainee from "./pages/MonitorTrainee";
+import TraineeInfo from "./pages/TraineeInfo";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/trainer" element={<Trainer />} />
         <Route path="/" element={<Home />} />
         <Route path="/trainee/test" element={<Test />} />
+        <Route path="/monitortrainee" element={<MonitorTrainee />} />
+        <Route path="/trainee-info/:id" element={<TraineeInfo />} />
       </Routes>
     </BrowserRouter>
   );
