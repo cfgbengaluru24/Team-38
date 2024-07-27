@@ -6,6 +6,7 @@ import TrainerSignin from "./pages/TrainerSignin";
 import TraineeSignup from "./pages/TraineeSignup";
 import TrainerSignup from "./pages/TrainerSignup";
 import Trainee from "./pages/Trainee";
+import Trainer from "./pages/Trainer";
 import Header from "./components/Header";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/trainer-signup" element={<TrainerSignup />} />
         <Route path="/trainer-signin" element={<TrainerSignin />} />
         <Route path="/trainee" element={<Trainee />} />
+        <Route path="/trainer" element={<Trainer />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
