@@ -21,7 +21,7 @@ const Trainer = () => {
         </div>
       </div>
       <button className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        
+        Chatbot
       </button>
     </div>
   );
