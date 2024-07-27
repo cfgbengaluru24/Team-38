@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BACKEND_URL } from "../config";
-import 'tailwindcss/tailwind.css';
 
-const TestMCQ = () => {
+const Test = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -50,8 +50,41 @@ const TestMCQ = () => {
     });
 
     const result = await res.json();
-    console.log(result);
+    setResult(result.percentage);
   };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  if (result !== null) {
+    return (
+      <div className="container mx-auto p-4 text-center">
+        <h1 className="text-3xl font-bold mb-6">
+          {result >= 70 ? "Congratulations!" : "Failed"}
+        </h1>
+        <p className="text-xl mb-6">
+          {result >= 70
+            ? `You passed with ${result}%. You are now a certified trainer!`
+            : `You scored ${result}%. Unfortunately, you did not pass. Please try again.`}
+        </p>
+        {result >= 70 && (
+          <div className="border p-4 rounded-lg bg-white shadow-lg inline-block">
+            <h2 className="text-2xl font-bold mb-4">Certificate of Achievement</h2>
+            <p className="mb-4">This certifies that</p>
+            <p className="text-xl font-bold mb-4">{currentUser.name}</p>
+            <p>has successfully passed the training and is now a certified trainer.</p>
+            <button
+              onClick={handlePrint}
+              className="bg-green-500 text-white font-bold py-2 px-4 rounded mt-4"
+            >
+              Download/Print Certificate
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -85,4 +118,4 @@ const TestMCQ = () => {
   );
 };
 
-export default TestMCQ;
+export default Test;

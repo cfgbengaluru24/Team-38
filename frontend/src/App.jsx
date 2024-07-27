@@ -8,6 +8,7 @@ import TraineeSignup from "./pages/TraineeSignup";
 import Trainee from "./pages/Trainee";
 import Trainer from "./pages/Trainer";
 import Header from "./components/Header";
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/trainee" element={<Trainee />} />
         <Route path="/trainer" element={<Trainer />} />
         <Route path="/" element={<Home />} />
+        <Route path="/trainee/test" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );
