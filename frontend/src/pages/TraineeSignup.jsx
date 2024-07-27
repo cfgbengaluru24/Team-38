@@ -1,25 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  signInStart,
-  signInSuccess,
-  signInFailure,
-} from "../redux/user/userSlice";
+import { useSelector } from "react-redux";
+
 import { BACKEND_URL } from "../config";
 
 export default function TraineeSignup() {
   const [formData, setFormData] = useState({});
-  const { currentUser, loading, error } = useSelector((state) => state.user);
+  const { loading, error } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (currentUser) {
-      navigate("/");
-    }
-  }, [currentUser, navigate]);
 
   const handleChange = (e) => {
     setFormData({
@@ -31,8 +20,7 @@ export default function TraineeSignup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(signInStart());
-      const res = await fetch(`${BACKEND_URL}/api/signup`, {
+      const res = await fetch(`${BACKEND_URL}/api/f/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,22 +30,17 @@ export default function TraineeSignup() {
       const data = await res.json();
 
       if (data.success === false) {
-        dispatch(signInFailure(data.message));
         return;
       }
-      dispatch(signInSuccess(data));
-      localStorage.setItem("token", data.token);
 
-      navigate("/trainee");
-    } catch (error) {
-      dispatch(signInFailure(error.message));
-    }
+      navigate("/trainee-signin");
+    } catch (error) {}
   };
 
   return (
     <div className="px-16 max-w-lg mx-auto my-24">
       <h1 className="text-3xl sm:text-4xl text-center font-extrabold my-7">
-      Trainee Sign Up
+        Trainee Sign Up
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -88,12 +71,11 @@ export default function TraineeSignup() {
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>
-        <OAuth />
       </form>
 
       <div className="flex gap-2 mt-3 justify-center items-center font-medium">
         <div>Have an account?</div>
-        <Link to={"/signin"}>
+        <Link to={"/trainee-signin"}>
           <span className="text-blue-700 hover:underline">Sign in</span>
         </Link>
       </div>
