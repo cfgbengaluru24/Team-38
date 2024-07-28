@@ -86,10 +86,6 @@ def comparative_graph():
 
     return send_file(save_path, mimetype='image/png')
 
-# Route for predicting business success rate
-from flask import Flask, request, jsonify
-import joblib
-import numpy as np
 
 
 @app.route("/predict-business-score", methods=["POST"])
