@@ -32,7 +32,7 @@ const HomePage = () => {
           <span className="text-white text-lg font-bold">Best Practices Foundation</span>
         </div>
         <div>
-          <Link to="/" className="text-white hover:underline mr-4">Login</Link>
+          <Link to="/home" className="text-white hover:underline mr-4">Login</Link>
         </div>
       </nav>
 
