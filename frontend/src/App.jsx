@@ -14,6 +14,8 @@ import TraineeInfo from "./pages/TraineeInfo";
 import ChatbotUI from "./pages/ChatbotUI";
 import Predict from "./pages/Predict";
 import CustomerInfo from "./pages/CustomerInfo";
+import HomePage from "./pages/HomePage";
+import MoveImplementation from "./pages/MoveImplementation";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/trainee" element={<Trainee />} />
         <Route path="/trainer" element={<Trainer />} />
         <Route path="/" element={<Home />} />
+        <Route path="/landing" element={<HomePage />} />
+        <Route path="/move" element={<MoveImplementation />} />
         <Route path="/customer-info/:id" element={<CustomerInfo />} />
         <Route path="/trainee/test" element={<Test />} />
         <Route path="/monitortrainee" element={<MonitorTrainee />} />
