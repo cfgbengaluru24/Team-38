@@ -12,6 +12,8 @@ import MonitorTrainee from "./pages/MonitorTrainee";
 import MonitorCustomer from "./pages/MonitorCustomer";
 import TraineeInfo from "./pages/TraineeInfo";
 import ChatbotUI from "./pages/ChatbotUI";
+import Predict from "./pages/Predict";
+import CustomerInfo from "./pages/CustomerInfo";
 
 function App() {
   return (
@@ -23,11 +25,13 @@ function App() {
         <Route path="/trainee" element={<Trainee />} />
         <Route path="/trainer" element={<Trainer />} />
         <Route path="/" element={<Home />} />
+        <Route path="/customer-info/:id" element={<CustomerInfo />} />
         <Route path="/trainee/test" element={<Test />} />
         <Route path="/monitortrainee" element={<MonitorTrainee />} />
         <Route path="/monitorcustomer" element={<MonitorCustomer />} />
         <Route path="/trainee-info/:id" element={<TraineeInfo />} />
         <Route path="/chatbot" element={<ChatbotUI />} />
+        <Route path="/predict" element={<Predict />} />
       </Routes>
     </BrowserRouter>
   );
