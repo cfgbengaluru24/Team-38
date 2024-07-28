@@ -4,6 +4,7 @@ import { BACKEND_URL } from "../config";
 import Graphs from "../components/Graphs";
 import "tailwindcss/tailwind.css";
 import FormComponent from "../components/FormComponent";
+import Predict from "./Predict";
 
 const CustomerInfo = () => {
   const { id } = useParams();
@@ -218,6 +219,8 @@ const CustomerInfo = () => {
       )}
       {showForm && <FormComponent />}
 
+      
+
       {showInsights && (
         <div className="mt-6 bg-white p-4 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold mb-4">Insights</h2>
@@ -232,6 +235,10 @@ const CustomerInfo = () => {
           <Graphs />
         </div>
       )}
+
+      <div className="my-1">
+        <Predict/>
+      </div>
     </div>
   );
 };
