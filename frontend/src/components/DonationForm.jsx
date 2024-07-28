@@ -9,7 +9,7 @@ const DonationForm = () => {
 
   const handleUPIPayment = (e) => {
     e.preventDefault();
-    const upiId = 'lekhanapatel6@okhdfcbank'; // Replace with your UPI ID
+    const upiId = ''; // Replace with your UPI ID
     const upiUrl = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=Donation`;
 
     window.location.href = upiUrl;
