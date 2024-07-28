@@ -38,28 +38,30 @@ const TraineeInfo = () => {
 	}, [id]);
 
 	return (
-		<div className="p-4 bg-gray-100 min-h-screen">
-			<div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-				<h2 className="text-2xl font-bold mb-4">{fresher.name}</h2>
-				<p className="text-lg mb-4">{fresher.email}</p>
-				<div className="flex flex-wrap justify-center">
-					{modules &&
-						modules.length &&
-						modules.map((item, ind) => (
-							<div
-								key={ind}
-								className="m-4 p-4 border rounded-lg shadow-lg w-64 bg-white"
-							>
-								<h2 className="text-xl font-bold mb-2">{item.Modules.moduleName}</h2>
-								<p
-									className={`text-lg ${
-										item.completed ? "text-green-500" : "text-red-500"
-									}`}
+		<div>
+			<center><h1>Trainee Info</h1></center>
+			<div className="p-4 bg-gray-100 min-h-screen">
+				<div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+					<h2 className="text-2xl font-bold mb-4">{fresher.name}</h2>
+					<p className="text-lg mb-4">{fresher.email}</p>
+					<div className="flex flex-wrap justify-center">
+						{modules &&
+							modules.length &&
+							modules.map((item, ind) => (
+								<div
+									key={ind}
+									className="m-4 p-4 border rounded-lg shadow-lg w-64 bg-white"
 								>
-									{item.completed ? "Completed" : "Not Completed"}
-								</p>
-							</div>
-						))}
+									<h2 className="text-xl font-bold mb-2">{item.Modules.moduleName}</h2>
+									<p
+										className={`text-lg ${item.completed ? "text-green-500" : "text-red-500"
+											}`}
+									>
+										{item.completed ? "Completed" : "Not Completed"}
+									</p>
+								</div>
+							))}
+					</div>
 				</div>
 			</div>
 		</div>
