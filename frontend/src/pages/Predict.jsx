@@ -42,6 +42,25 @@ const Predict = () => {
         className="bg-white p-6 rounded shadow-md w-full max-w-lg"
       >
         <h2 className="text-2xl font-bold mb-4">Predict Business Score</h2>
+        <div> <b>
+          
+          Market conditions:  
+          </b>
+  Higher Scores (Close to 1): Indicate favorable market conditions, suggesting a supportive environment for business growth and success. This could mean high consumer demand, low competition, and stable economic conditions.
+Lower Scores (Close to 0): Indicate challenging market conditions, suggesting a less supportive or more competitive environment. This could mean low consumer demand, high competition, and economic instability.
+</div>
+
+<div className='mt-2'>
+
+
+<b>
+Demographic Specifications  :
+
+</b>
+1 - Urban, Low Income
+2 - Urban, Middle Income
+3 - Rural, Low Income
+4 - Rural, Middle Income</div>
         <div className="mb-4">
           <label className="block text-gray-700">Investment</label>
           <input

@@ -14,7 +14,7 @@ const TraineeInfo = () => {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: "Bearer " + localStorage.getItem("token"),
+					Authorization: "Bearer " + "",
 				},
 			});
 			const data = await res.json();
@@ -26,7 +26,7 @@ const TraineeInfo = () => {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: "Bearer " + localStorage.getItem("token"),
+					Authorization: "Bearer " + "",
 				},
 			});
 			const data = await res.json();

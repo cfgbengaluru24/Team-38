@@ -25,6 +25,9 @@ const HomePage = () => {
 
   return (
     <div>
+      
+      <div style={{'float':'right','position':'fixed','top':'80px', 'zIndex':'2'}} id="google_translate_element" className="fixed bottom-4 right-4"></div>
+    <div>
       {/* Navbar */}
       <nav className="bg-green-800 p-4 flex justify-between items-center">
         <div className="flex items-center">
@@ -32,7 +35,8 @@ const HomePage = () => {
           <span className="text-white text-lg font-bold">Best Practices Foundation</span>
         </div>
         <div>
-          <Link to="/" className="text-white hover:underline mr-4">Login</Link>
+          <div id="google_translate_element" className="fixed bottom-4 right-4"></div>
+          <Link to="/home" className="text-white hover:underline mr-4">Login</Link>
         </div>
       </nav>
 
@@ -112,6 +116,8 @@ const HomePage = () => {
         <DonationForm />
       </Modal>
     </div>
+    </div>
+
   );
 };
 
